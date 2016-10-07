@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -19,16 +20,17 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
 
     Context context;
 
+    private MagasinHolder holder;
+
     public ArrayAdapterMagasins(Context context, int ressourceId, List<Magasin> items) {
         super(context, ressourceId, items);
         this.context = context;
     }
 
 
-    public class ClientHolder {
+    public class MagasinHolder {
         TextView txtNom;
-        TextView txtAge;
-        TextView txtVille;
+        ImageButton ibtn;
 
         public TextView getTxtNom() {
             return txtNom;
@@ -38,27 +40,13 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
             this.txtNom = txtNom;
         }
 
-        public TextView getTxtAge() {
-            return txtAge;
+        public ImageButton getIbtn() {
+            return ibtn;
         }
 
-        public void setTxtAge(TextView txtAge) {
-            this.txtAge = txtAge;
+        public void setIbtn(ImageButton ibtn) {
+            this.ibtn = ibtn;
         }
-
-        public TextView getTxtVille() {
-            return txtVille;
-        }
-
-        public void setTxtVille(TextView txtVille) {
-            this.txtVille = txtVille;
-        }
-    }
-
-    private ClientHolder holder;
-
-    public ClientHolder getHolder() {
-        return holder;
     }
 
     @Override
@@ -71,20 +59,23 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
 
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.relative_layout, null);
-            holder = new ClientHolder();
-          //  holder.txtNom = (TextView) convertView.findViewById(R.id.relative_layout_txt_nom);
-        //    holder.txtAge = (TextView) convertView.findViewById(R.id.relative_layout_txt_age);
-         //   holder.txtVille = (TextView) convertView.findViewById(R.id.relative_layout_txt_ville);
+            holder = new MagasinHolder();
+            holder.txtNom = (TextView) convertView.findViewById(R.id.relative_layout_tvw_nom_magasin);
+            holder.ibtn = (ImageButton) convertView.findViewById(R.id.relative_layout_ibtn_magasin);
+
             convertView.setTag(holder);
         } else {
-            holder = (ClientHolder) convertView.getTag();
+            holder = (MagasinHolder) convertView.getTag();
         }
 
         holder.txtNom.setText(rowItem.getNom());
-        holder.txtAge.setText(Integer.toString(rowItem.getAge()));
-        holder.txtVille.setText(rowItem.getVille());
+        holder.ibtn.setImageBitmap(rowItem.getImage());
 
         return convertView;
+    }
+
+    public MagasinHolder getHolder() {
+        return holder;
     }
 
 }

@@ -189,20 +189,18 @@ public class DbHelper extends SQLiteOpenHelper {
         return idNouveauClient;
     }
 
-
     /**
      * Met à jour un magasin dans la BD
      *
      * @param magasin le magasin à mettre à jour avec les nouvelles informations
      * @return true  si update réussi, sinon false;
      */
-    public boolean updateClient(Magasin magasin) {
+    public boolean updateMagasin(Magasin magasin) {
         SQLiteDatabase db = this.getWritableDatabase();
-
+        
         ContentValues values = new ContentValues();
         values.put(MAGASIN_NOM, magasin.getNom());
         values.put(MAGASIN_IMAGE, DbBitmapUtility.getBytes(magasin.getImage()));
-        ;
 
         int nbMAJ = db.update(NOM_TABLE_MAGASIN, values, MAGASIN_ID + " = ?",
                 new String[]{String.valueOf(magasin.getId())});
