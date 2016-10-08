@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private DbHelper dbHelper;
 
     ArrayAdapterMagasins arrayAdapterMagasins;
-    ListView lvwClients;
-    List<Magasin> listeClients;
+    ListView lvwMagasins;
+    List<Magasin> listeMagasins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +32,24 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = DbHelper.getInstance(getApplicationContext());
 
-        listeClients = dbHelper.getListeClient();
+        listeMagasins = dbHelper.getListeClient();
 
-        lvwClients = (ListView) findViewById(R.id.activity_main_lvw_magasins);
+        lvwMagasins = (ListView) findViewById(R.id.activity_main_lvw_magasins);
 
-        arrayAdapterMagasins = new ArrayAdapterMagasins(this, R.layout.relative_layout, listeClients);
+        arrayAdapterMagasins = new ArrayAdapterMagasins(this, R.layout.relative_layout, listeMagasins);
 
-        lvwClients.setAdapter(arrayAdapterMagasins);
+        lvwMagasins.setAdapter(arrayAdapterMagasins);
 
 
         /**
          * Évènement qui se déclenche lorsque l'utilisateur appuie sur une ligne de
-         * la liste de clients
+         * la liste de magasins
          *
          */
-        lvwClients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvwMagasins.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             /**
-             * Ouvre la page détails clientEnCours lorsque ligne clientEnCours appuyée
+             * Déclenche l'activité MagasinActivity lorsqu'un magasin a été appuyé
              *
              * doc https://developer.android.com/reference/android/widget/AdapterView.OnItemClickListener.html
              * @param parent AdapterView: The AdapterView where the click happened.

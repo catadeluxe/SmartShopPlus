@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String PRODUIT_ID = "_id";
     private static final String PRODUIT_ID_MAGASIN_FK = "id_magasin_fk";
     private static final String PRODUIT_NOM = "nom";
-    private static final String PRODUIT_QUALTITE = "qualtite";
+    private static final String PRODUIT_QUANTITE = "qualtite";
     private static final String PRODUIT_TYPE_QUANTITE = "type_quantite";
     private static final String PRODUIT_PRIX = "prix";
 
@@ -57,24 +58,42 @@ public class DbHelper extends SQLiteOpenHelper {
     /**
      * Création table bases de données
      *
-     * @param db
+     * @param db la base de données
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        listeMagasins.add(new Magasin("Super C"));
-        listeMagasins.add(new Magasin("Dollarama"));
-        listeMagasins.add(new Magasin("Costco"));
-        listeMagasins.add(new Magasin("Marchés TAU"));
-        listeMagasins.add(new Magasin("Marché Jean-Talon"));
-        listeMagasins.add(new Magasin("Tim Hortons"));
+        // TODO Créer Bitmap pour pouvoir travailler. Utiliser image libre sur Internet
+        listeMagasins.add(new Magasin("Super C", Bitmap.createBitmap(null)));
+        listeMagasins.add(new Magasin("Dollarama", Bitmap.createBitmap(null)));
+        listeMagasins.add(new Magasin("Costco", Bitmap.createBitmap(null)));
+        listeMagasins.add(new Magasin("Marchés TAU", Bitmap.createBitmap(null)));
+        listeMagasins.add(new Magasin("Marché Jean-Talon", Bitmap.createBitmap(null)));
+        listeMagasins.add(new Magasin("Tim Hortons", Bitmap.createBitmap(null)));
+        listeMagasins.add(new Magasin("Bombardier", Bitmap.createBitmap(null)));
+
+        String commandeSqlPermettreClesEtrangeres = "PRAGMA foreign_keys = 1;";
 
 
-        String sqlClient =
+        String commandeSqlCreationTableMagasin =
                 "CREATE TABLE " + NOM_TABLE_MAGASIN +
                         "(" + MAGASIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         MAGASIN_NOM + " TEXT," +
                         MAGASIN_IMAGE + " BLOB)";
-        db.execSQL(sqlClient);
+
+        String commandeSqlCreationTableProduit =
+                "CREATE TABLE " + NOM_TABLE_PRODUIT +
+                        "(" + PRODUIT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        PRODUIT_ID_MAGASIN_FK + " INTEGER," +
+                        PRODUIT_NOM + " TEXT," +
+                        PRODUIT_QUANTITE + " REAL," +
+                        PRODUIT_TYPE_QUANTITE + " TEXT," +
+                        PRODUIT_PRIX + " REAL);";
+
+        db.execSQL(commandeSqlPermettreClesEtrangeres);
+
+        db.execSQL(commandeSqlCreationTableMagasin);
+
+        db.execSQL(commandeSqlCreationTableProduit);
 
         ContentValues values = new ContentValues();
 
@@ -82,7 +101,7 @@ public class DbHelper extends SQLiteOpenHelper {
             values.put(MAGASIN_NOM, magasin.getNom());
 
             long id = db.insert(NOM_TABLE_MAGASIN, null, values);
-            magasin.setId(id); // TODO est-ce utile?
+            magasin.setId(id); // TODO effacer pourla remise; inutile sauf pour des raisons de déboggage
         }
 
 
@@ -197,7 +216,7 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     public boolean updateMagasin(Magasin magasin) {
         SQLiteDatabase db = this.getWritableDatabase();
-        
+
         ContentValues values = new ContentValues();
         values.put(MAGASIN_NOM, magasin.getNom());
         values.put(MAGASIN_IMAGE, DbBitmapUtility.getBytes(magasin.getImage()));
