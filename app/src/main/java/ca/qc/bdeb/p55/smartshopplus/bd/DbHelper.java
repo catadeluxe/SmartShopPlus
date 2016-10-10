@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.qc.bdeb.p55.smartshopplus.R;
 import ca.qc.bdeb.p55.smartshopplus.modele.Magasin;
 
 /**
@@ -62,17 +64,18 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO Créer Bitmap pour pouvoir travailler. Utiliser image libre sur Internet
-        listeMagasins.add(new Magasin("Super C", Bitmap.createBitmap(null)));
-        listeMagasins.add(new Magasin("Dollarama", Bitmap.createBitmap(null)));
-        listeMagasins.add(new Magasin("Costco", Bitmap.createBitmap(null)));
-        listeMagasins.add(new Magasin("Marchés TAU", Bitmap.createBitmap(null)));
-        listeMagasins.add(new Magasin("Marché Jean-Talon", Bitmap.createBitmap(null)));
-        listeMagasins.add(new Magasin("Tim Hortons", Bitmap.createBitmap(null)));
-        listeMagasins.add(new Magasin("Bombardier", Bitmap.createBitmap(null)));
+        Bitmap imageMagasin = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_store_white_36dp);
 
+        listeMagasins.add(new Magasin("Super C", imageMagasin));
+        listeMagasins.add(new Magasin("Dollarama", imageMagasin));
+        listeMagasins.add(new Magasin("Costco", imageMagasin));
+        listeMagasins.add(new Magasin("Marchés TAU", imageMagasin));
+        listeMagasins.add(new Magasin("Marché Jean-Talon", imageMagasin));
+        listeMagasins.add(new Magasin("Tim Hortons", imageMagasin));
+        listeMagasins.add(new Magasin("Bombardier", imageMagasin));
+
+        // Création Strings commandes SQL à exécuter
         String commandeSqlPermettreClesEtrangeres = "PRAGMA foreign_keys = 1;";
-
 
         String commandeSqlCreationTableMagasin =
                 "CREATE TABLE " + NOM_TABLE_MAGASIN +
@@ -89,19 +92,21 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_TYPE_QUANTITE + " TEXT," +
                         PRODUIT_PRIX + " REAL);";
 
+        // Exécution commandes SQL
         db.execSQL(commandeSqlPermettreClesEtrangeres);
-
         db.execSQL(commandeSqlCreationTableMagasin);
-
         db.execSQL(commandeSqlCreationTableProduit);
 
         ContentValues values = new ContentValues();
 
         for (Magasin magasin : listeMagasins) {
             values.put(MAGASIN_NOM, magasin.getNom());
+            values.put(MAGASIN_IMAGE, DbBitmapUtility.getBytes(magasin.getImage()));
 
             long id = db.insert(NOM_TABLE_MAGASIN, null, values);
-            magasin.setId(id); // TODO effacer pourla remise; inutile sauf pour des raisons de déboggage
+
+            // TODO effacer cette ligne pour la remise, elle est inutile, sauf pour des raisons de déboggage
+            magasin.setId(id);
         }
 
 

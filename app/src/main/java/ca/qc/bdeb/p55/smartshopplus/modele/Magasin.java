@@ -14,6 +14,7 @@ public class Magasin {
      * Constructer par défaut qui ne prend aucun paramètre
      */
     public Magasin() {
+        id = -1;
     }
 
     /**
@@ -22,6 +23,7 @@ public class Magasin {
      * @param nom le nom du magasin
      */
     public Magasin(String nom) {
+        id = -1;
         this.nom = nom;
     }
 
