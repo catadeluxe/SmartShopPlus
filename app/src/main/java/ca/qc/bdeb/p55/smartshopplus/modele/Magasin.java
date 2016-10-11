@@ -16,7 +16,7 @@ public class Magasin {
     public Magasin() {
         id = -1;
     }
-
+    
     /**
      * Constructeur qui prend en paramètre le nom du magasin
      *

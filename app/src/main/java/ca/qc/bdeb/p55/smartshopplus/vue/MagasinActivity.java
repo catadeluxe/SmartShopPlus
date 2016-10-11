@@ -10,12 +10,11 @@ import ca.qc.bdeb.p55.smartshopplus.modele.Magasin;
 
 public class MagasinActivity extends AppCompatActivity {
 
-    Long idMag;
-
-    Intent intent;
-    DbHelper dbHelper;
-
     Magasin magasin;
+    Long idMag;
+    Intent intent;
+
+    DbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +28,6 @@ public class MagasinActivity extends AppCompatActivity {
         magasin = dbHelper.getMagasin(idMag);
 
 
-//        getActionBar().setTitle(magasin.getNom());
+        getSupportActionBar().setTitle(magasin.getNom());
     }
 }
