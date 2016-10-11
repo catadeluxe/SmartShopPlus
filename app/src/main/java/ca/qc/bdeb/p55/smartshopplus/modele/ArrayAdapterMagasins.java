@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,7 +30,16 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
 
     public class MagasinHolder {
         TextView txtNom;
-        ImageButton ibtn;
+        ImageView img;
+
+
+        public ImageView getImg() {
+            return img;
+        }
+
+        public void setImg(ImageView img) {
+            this.img = img;
+        }
 
         public TextView getTxtNom() {
             return txtNom;
@@ -40,13 +49,6 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
             this.txtNom = txtNom;
         }
 
-        public ImageButton getIbtn() {
-            return ibtn;
-        }
-
-        public void setIbtn(ImageButton ibtn) {
-            this.ibtn = ibtn;
-        }
     }
 
     @Override
@@ -61,7 +63,7 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
             convertView = mInflater.inflate(R.layout.relative_layout, null);
             holder = new MagasinHolder();
             holder.txtNom = (TextView) convertView.findViewById(R.id.relative_layout_tvw_nom_magasin);
-            holder.ibtn = (ImageButton) convertView.findViewById(R.id.relative_layout_ibtn_magasin);
+            holder.img = (ImageView) convertView.findViewById(R.id.relative_layout_img_magasin);
 
             convertView.setTag(holder);
         } else {
@@ -69,7 +71,7 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
         }
 
         holder.txtNom.setText(rowItem.getNom());
-        holder.ibtn.setImageBitmap(rowItem.getImage());
+        holder.img.setImageBitmap(rowItem.getImage());
 
         return convertView;
     }
