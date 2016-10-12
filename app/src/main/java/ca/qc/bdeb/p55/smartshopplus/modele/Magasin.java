@@ -37,6 +37,7 @@ public class Magasin {
         id = -1;
         this.nom = nom;
         this.image = image;
+        System.out.println();
     }
 
     /**
