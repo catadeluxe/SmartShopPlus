@@ -37,7 +37,6 @@ public class Magasin {
         id = -1;
         this.nom = nom;
         this.image = image;
-        System.out.println();
     }
 
     /**
@@ -50,6 +49,7 @@ public class Magasin {
     public Magasin(long id, String nom, Bitmap image) {
         this.id = id;
         this.nom = nom;
+        this.image = image;
     }
 
     public long getId() {

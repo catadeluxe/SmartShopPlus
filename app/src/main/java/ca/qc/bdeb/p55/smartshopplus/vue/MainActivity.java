@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = DbHelper.getInstance(getApplicationContext());
 
-        listeMagasins = dbHelper.getListeClient();
+        listeMagasins = dbHelper.getListeMagasins();
 
         lvwMagasins = (ListView) findViewById(R.id.activity_main_lvw_magasins);
 

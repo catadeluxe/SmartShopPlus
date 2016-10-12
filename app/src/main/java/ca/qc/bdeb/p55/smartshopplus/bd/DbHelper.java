@@ -65,7 +65,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Bitmap imageMagasin = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_store_black_48dp);
-        
+
         listeMagasins.add(new Magasin("Super C", imageMagasin));
         listeMagasins.add(new Magasin("Dollarama", imageMagasin));
         listeMagasins.add(new Magasin("Costco", imageMagasin));
@@ -81,7 +81,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + NOM_TABLE_MAGASIN +
                         "(" + MAGASIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         MAGASIN_NOM + " TEXT," +
-                        MAGASIN_IMAGE + " BLOB)";
+                        MAGASIN_IMAGE + " BLOB);";
 
         String commandeSqlCreationTableProduit =
                 "CREATE TABLE " + NOM_TABLE_PRODUIT +
@@ -151,7 +151,7 @@ public class DbHelper extends SQLiteOpenHelper {
      *
      * @return la liste de tous les clients
      */
-    public List<Magasin> getListeClient() {
+    public List<Magasin> getListeMagasins() {
 
         List<Magasin> listeMagasins = new ArrayList<Magasin>();
 
@@ -163,17 +163,18 @@ public class DbHelper extends SQLiteOpenHelper {
                 new String[]{MAGASIN_ID, MAGASIN_NOM, MAGASIN_IMAGE},
                 null, null, null, null, null);
 
-        if (cursor.moveToFirst()) {
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
 
-            do {
-                magasin = new Magasin(cursor.getLong(0), cursor.getString(1),
-                        DbBitmapUtility.getImage(cursor.getBlob(2)));
+                do {
+                    magasin = new Magasin(cursor.getLong(0), cursor.getString(1),
+                            DbBitmapUtility.getImage(cursor.getBlob(2)));
 
-                listeMagasins.add(magasin);
-            } while (cursor.moveToNext());
+                    listeMagasins.add(magasin);
+                } while (cursor.moveToNext());
 
+            }
         }
-
         cursor.close();
         return listeMagasins;
     }
@@ -183,7 +184,7 @@ public class DbHelper extends SQLiteOpenHelper {
      *
      * @param magasin le magasin à supprimer
      */
-    public void deleteClient(Magasin magasin) {
+    public void deleteMagasin(Magasin magasin) {
         SQLiteDatabase db = this.getWritableDatabase(); // On veut écrire dans la BD
         db.delete(NOM_TABLE_MAGASIN, MAGASIN_ID + " = ?",
                 new String[]{String.valueOf(magasin.getId())});
