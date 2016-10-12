@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         lvwMagasins.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             /**
-             * Déclenche l'activité MagasinActivity lorsqu'un magasin a été appuyé
+             * Déclenche l'activité CreationMagasinActivity lorsqu'un magasin a été appuyé
              *
              * doc https://developer.android.com/reference/android/widget/AdapterView.OnItemClickListener.html
              * @param parent AdapterView: The AdapterView where the click happened.
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Magasin magClique = (Magasin) parent.getItemAtPosition(position);
 
-                Intent intent = new Intent(getBaseContext(), MagasinActivity.class);
+                Intent intent = new Intent(getBaseContext(), CreationMagasinActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, magClique.getId());
                 startActivity(intent);
             }

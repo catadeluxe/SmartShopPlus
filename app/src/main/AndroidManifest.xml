@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".vue.MagasinActivity"></activity>
+        <activity android:name=".vue.CreationMagasinActivity"></activity>
     </application>
 
 </manifest>

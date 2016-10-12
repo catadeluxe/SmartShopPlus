@@ -8,7 +8,7 @@ import ca.qc.bdeb.p55.smartshopplus.R;
 import ca.qc.bdeb.p55.smartshopplus.bd.DbHelper;
 import ca.qc.bdeb.p55.smartshopplus.modele.Magasin;
 
-public class MagasinActivity extends AppCompatActivity {
+public class CreationMagasinActivity extends AppCompatActivity {
 
     Magasin magasin;
     Long idMag;
@@ -19,7 +19,7 @@ public class MagasinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_magasin);
+        setContentView(R.layout.activity_creation_magasin);
 
         dbHelper = DbHelper.getInstance(getApplicationContext());
         intent = getIntent();

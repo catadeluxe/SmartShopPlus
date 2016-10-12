@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SmartShopPlus</string>
+    <string name="desc_store_name">Nom magasin</string>
+    <string name="hint_store_name">Saisir nom magasin</string>
+    <string name="desc_store_image">Image</string>
+
 </resources>

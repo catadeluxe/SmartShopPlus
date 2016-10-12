@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SmartShopPlus</string>
+    <string name="desc_store_name">Store name</string>
+    <string name="hint_store_name">Insert store name</string>
+    <string name="desc_store_image">Image</string>
+
+
 </resources>

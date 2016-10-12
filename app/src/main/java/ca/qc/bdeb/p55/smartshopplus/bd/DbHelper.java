@@ -64,7 +64,7 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Bitmap imageMagasin = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_store_white_36dp);
+        Bitmap imageMagasin = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_store_black_48dp);
         
         listeMagasins.add(new Magasin("Super C", imageMagasin));
         listeMagasins.add(new Magasin("Dollarama", imageMagasin));
