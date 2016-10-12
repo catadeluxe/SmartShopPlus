@@ -39,6 +39,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String PRODUIT_QUANTITE = "qualtite";
     private static final String PRODUIT_TYPE_QUANTITE = "type_quantite";
     private static final String PRODUIT_PRIX = "prix";
+    private static final String PRODUIT_IMAGE = "image";
 
 
     private ArrayList<Magasin> listeMagasins = new ArrayList<Magasin>();
@@ -64,7 +65,8 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Bitmap imageMagasin = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_store_black_48dp);
+        Bitmap imageMagasin = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.ic_store_black_48dp);
 
         listeMagasins.add(new Magasin("Super C", imageMagasin));
         listeMagasins.add(new Magasin("Dollarama", imageMagasin));
@@ -81,7 +83,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + NOM_TABLE_MAGASIN +
                         "(" + MAGASIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         MAGASIN_NOM + " TEXT," +
-                        MAGASIN_IMAGE + " BLOB);";
+                        MAGASIN_IMAGE + " BLOB)";
 
         String commandeSqlCreationTableProduit =
                 "CREATE TABLE " + NOM_TABLE_PRODUIT +
@@ -90,7 +92,8 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_NOM + " TEXT," +
                         PRODUIT_QUANTITE + " REAL," +
                         PRODUIT_TYPE_QUANTITE + " TEXT," +
-                        PRODUIT_PRIX + " REAL);";
+                        PRODUIT_PRIX + " REAL" +
+                        PRODUIT_IMAGE + " BLOB)";
 
         // Exécution commandes SQL
         db.execSQL(commandeSqlPermettreClesEtrangeres);
@@ -105,11 +108,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
             long id = db.insert(NOM_TABLE_MAGASIN, null, values);
 
-            // TODO effacer cette ligne pour la remise, elle est inutile, sauf pour des raisons de déboggage
             magasin.setId(id);
         }
-
-
     }
 
     @Override

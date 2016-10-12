@@ -1,5 +1,7 @@
 package ca.qc.bdeb.p55.smartshopplus.modele;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by C A T A on 2016-10-07.
  */
@@ -12,6 +14,8 @@ public class Produit {
     private long quantite;
     private String typeQuantite;
     private double prix;
+    private double prixUnitaire;
+    private Bitmap image;
 
 
     /**
@@ -21,38 +25,49 @@ public class Produit {
     }
 
     /**
-     * Constructeur nécessitant tous les paramètres sauf l'id
+     * Constructeur nécessitant tous les paramètres sauf l'id du produit
      *
-     * @param idMagasinFk l'id du magasin où le produit se retrouve
-     * @param nom le nom du produit
-     * @param quantite la quantité de produit
+     * @param idMagasinFk  l'id du magasin où le produit se retrouve
+     * @param nom          le nom du produit
+     * @param quantite     la quantité de produit
      * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
-     * @param prix
+     * @param prix         le prix du produit
+     * @param prixUnitaire le prix unitaire du produit
+     * @param image        l'image du produit
      */
-    public Produit(long idMagasinFk, String nom, long quantite, String typeQuantite, double prix) {
+    public Produit(long idMagasinFk, String nom, long quantite, String typeQuantite, double prix,
+                   double prixUnitaire, Bitmap image) {
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
         this.quantite = quantite;
         this.typeQuantite = typeQuantite;
         this.prix = prix;
+        this.prixUnitaire = prixUnitaire;
+        this.image = image;
     }
 
     /**
      * Constructeur nécessitant tous les paramètres
-     * @param id
-     * @param idMagasinFk
-     * @param nom
-     * @param quantite
-     * @param typeQuantite
-     * @param prix
+     *
+     * @param id           l'id du produit
+     * @param idMagasinFk  l'id du magasin où le produit se retrouve
+     * @param nom          le nom du produit
+     * @param quantite     la quantité de produit
+     * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
+     * @param prix         le prix du produit
+     * @param prixUnitaire le prix unitaire du produit
+     * @param image        l'image du produit
      */
-    public Produit(long id, long idMagasinFk, String nom, long quantite, String typeQuantite, double prix) {
+    public Produit(long id, long idMagasinFk, String nom, long quantite, String typeQuantite,
+                   double prix, double prixUnitaire, Bitmap image) {
         this.id = id;
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
         this.quantite = quantite;
         this.typeQuantite = typeQuantite;
         this.prix = prix;
+        this.prixUnitaire = prixUnitaire;
+        this.image = image;
     }
 
     public long getId() {
@@ -101,5 +116,21 @@ public class Produit {
 
     public void setPrix(double prix) {
         this.prix = prix;
+    }
+
+    public double getPrixUnitaire() {
+        return prixUnitaire;
+    }
+
+    public void setPrixUnitaire(double prixUnitaire) {
+        this.prixUnitaire = prixUnitaire;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 }

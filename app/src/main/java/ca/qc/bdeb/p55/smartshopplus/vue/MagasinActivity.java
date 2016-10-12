@@ -1,14 +1,15 @@
 package ca.qc.bdeb.p55.smartshopplus.vue;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 import ca.qc.bdeb.p55.smartshopplus.R;
 import ca.qc.bdeb.p55.smartshopplus.bd.DbHelper;
 import ca.qc.bdeb.p55.smartshopplus.modele.Magasin;
 
-public class CreationMagasinActivity extends AppCompatActivity {
+public class MagasinActivity extends AppCompatActivity {
+
 
     Magasin magasin;
     Long idMag;
@@ -19,7 +20,9 @@ public class CreationMagasinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_creation_magasin);
+        setContentView(R.layout.activity_magasin);
+
+
 
         dbHelper = DbHelper.getInstance(getApplicationContext());
         intent = getIntent();
@@ -29,5 +32,6 @@ public class CreationMagasinActivity extends AppCompatActivity {
 
 
         getSupportActionBar().setTitle(magasin.getNom());
+
     }
 }

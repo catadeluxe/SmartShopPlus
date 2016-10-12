@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -14,33 +13,23 @@ import java.util.List;
 import ca.qc.bdeb.p55.smartshopplus.R;
 
 /**
- * Created by Catalin on 2016-09-14.
+ * Created by C A T A on 2016-10-12.
  */
-public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
+
+public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
     Context context;
 
-    private MagasinHolder holder;
+    private ProduitHolder holder;
 
-    public ArrayAdapterMagasins(Context context, int ressourceId, List<Magasin> items) {
+    public ArrayAdapterProduits(Context context, int ressourceId, List<Produit> items) {
         super(context, ressourceId, items);
         this.context = context;
     }
 
 
-    public class MagasinHolder {
+    public class ProduitHolder {
         TextView txtNom;
-        ImageView img;
-
-
-        public ImageView getImg() {
-            return img;
-        }
-
-        public void setImg(ImageView img) {
-            this.img = img;
-        }
-
         public TextView getTxtNom() {
             return txtNom;
         }
@@ -54,29 +43,28 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         holder = null;
-        Magasin rowItem = getItem(position);
+        Produit rowItem = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(
                 Activity.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.relative_layout_liste_magasins, null);
-            holder = new MagasinHolder();
+            holder = new ProduitHolder();
             holder.txtNom = (TextView) convertView.findViewById(R.id.relative_layout_tvw_nom_magasin);
-            holder.img = (ImageView) convertView.findViewById(R.id.relative_layout_liste_magasins_img_magasin);
+
 
             convertView.setTag(holder);
         } else {
-            holder = (MagasinHolder) convertView.getTag();
+            holder = (ProduitHolder) convertView.getTag();
         }
 
         holder.txtNom.setText(rowItem.getNom());
-        holder.img.setImageBitmap(rowItem.getImage());
 
         return convertView;
     }
 
-    public MagasinHolder getHolder() {
+    public ProduitHolder getHolder() {
         return holder;
     }
 
