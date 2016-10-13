@@ -15,6 +15,8 @@ import ca.qc.bdeb.p55.smartshopplus.R;
 import ca.qc.bdeb.p55.smartshopplus.modele.Magasin;
 import ca.qc.bdeb.p55.smartshopplus.modele.Produit;
 
+import static android.R.attr.id;
+
 /**
  * Created by Catalin on 2016-09-14.
  */
@@ -284,39 +286,39 @@ public class DbHelper extends SQLiteOpenHelper {
         return produit;
     }
 
-    //TODO EN PRODUIT
-
     /**
-     * Retourne la liste de tous les clients dans la base de données
+     * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre
      *
-     * @return la liste de tous les clients
+     * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
      */
-    public List<Magasin> getListeProduits() {
+    public List<Produit> getListeProduitsMagasin(long id_magasin) {
 
-        List<Magasin> listeMagasins = new ArrayList<Magasin>();
+        List<Produit> listeProduits = new ArrayList<Produit>();
 
         SQLiteDatabase data = this.getReadableDatabase();
 
-        Magasin magasin;
+        Produit produit;
 
-        Cursor cursor = data.query(NOM_TABLE_MAGASIN,
-                new String[]{MAGASIN_ID, MAGASIN_NOM, MAGASIN_IMAGE},
-                null, null, null, null, null);
+        Cursor cursor = data.query(NOM_TABLE_PRODUIT,
+                new String[]{PRODUIT_ID, PRODUIT_ID_MAGASIN_FK, PRODUIT_NOM, PRODUIT_QUANTITE,
+                        PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_PRIX_UNITAIRE, PRODUIT_IMAGE},
+                PRODUIT_ID_MAGASIN_FK + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-
                 do {
-                    magasin = new Magasin(cursor.getLong(0), cursor.getString(1),
-                            DbBitmapUtility.getImage(cursor.getBlob(2)));
+                    produit = new Produit(cursor.getLong(0), cursor.getLong(1),
+                            cursor.getString(2), cursor.getLong(3), cursor.getString(4),
+                            cursor.getLong(5), cursor.getLong(6),
+                            DbBitmapUtility.getImage(cursor.getBlob(7)));
 
-                    listeMagasins.add(magasin);
+                    listeProduits.add(produit);
                 } while (cursor.moveToNext());
-
             }
         }
         cursor.close();
-        return listeMagasins;
+        return listeProduits;
     }
 
     //TODO EN PRODUIT
