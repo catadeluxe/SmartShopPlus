@@ -13,6 +13,7 @@ import java.util.List;
 
 import ca.qc.bdeb.p55.smartshopplus.R;
 import ca.qc.bdeb.p55.smartshopplus.modele.Magasin;
+import ca.qc.bdeb.p55.smartshopplus.modele.Produit;
 
 /**
  * Created by Catalin on 2016-09-14.
@@ -39,6 +40,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String PRODUIT_QUANTITE = "qualtite";
     private static final String PRODUIT_TYPE_QUANTITE = "type_quantite";
     private static final String PRODUIT_PRIX = "prix";
+    private static final String PRODUIT_PRIX_UNITAIRE = "PRIX_UNITAIRE";
     private static final String PRODUIT_IMAGE = "image";
 
 
@@ -92,8 +94,11 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_NOM + " TEXT," +
                         PRODUIT_QUANTITE + " REAL," +
                         PRODUIT_TYPE_QUANTITE + " TEXT," +
-                        PRODUIT_PRIX + " REAL" +
-                        PRODUIT_IMAGE + " BLOB)";
+                        PRODUIT_PRIX + " REAL," +
+                        PRODUIT_PRIX_UNITAIRE + " REAL," +
+                        PRODUIT_IMAGE + " BLOB," +
+                        "FOREIGN KEY(" + PRODUIT_ID_MAGASIN_FK +
+                        ") REFERENCES " + NOM_TABLE_MAGASIN + "(" + MAGASIN_ID + ")";
 
         // Exécution commandes SQL
         db.execSQL(commandeSqlPermettreClesEtrangeres);
@@ -118,7 +123,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Retourne le client dont l'id est passé par paramètre
+     * Retourne le magasin dont l'id est passé par paramètre
      *
      * @param id l'id du magasin à retourner
      * @return le magasin dont l'id a été passé en paramètre
@@ -192,26 +197,26 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Ajoute un client à la base de données.
+     * Ajoute un magasin à la base de données.
      *
      * @param magasinAAjouter Le client à ajouter.
      * @return L'id du client ajouté.
      */
-    public long ajouterClient(Magasin magasinAAjouter) {
-        long idNouveauClient = -1;
+    public long ajouterMagasin(Magasin magasinAAjouter) {
+        long idNouveauMagasin = -1;
 
         SQLiteDatabase db = this.getWritableDatabase(); // On veut écrire dans la BD
         ContentValues values = new ContentValues();
         values.put(MAGASIN_NOM, magasinAAjouter.getNom());
         values.put(MAGASIN_IMAGE, DbBitmapUtility.getBytes(magasinAAjouter.getImage()));
 
-        idNouveauClient = db.insert(NOM_TABLE_MAGASIN, null, values);
+        idNouveauMagasin = db.insert(NOM_TABLE_MAGASIN, null, values);
 
-        magasinAAjouter.setId(idNouveauClient);
+        magasinAAjouter.setId(idNouveauMagasin);
 
         db.close(); // Fermer la connexion
 
-        return idNouveauClient;
+        return idNouveauMagasin;
     }
 
     /**
@@ -221,6 +226,147 @@ public class DbHelper extends SQLiteOpenHelper {
      * @return true  si update réussi, sinon false;
      */
     public boolean updateMagasin(Magasin magasin) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(MAGASIN_NOM, magasin.getNom());
+        values.put(MAGASIN_IMAGE, DbBitmapUtility.getBytes(magasin.getImage()));
+
+        int nbMAJ = db.update(NOM_TABLE_MAGASIN, values, MAGASIN_ID + " = ?",
+                new String[]{String.valueOf(magasin.getId())});
+
+        return (nbMAJ > 0); // True si update réussi, sinon false
+    }
+
+
+    //
+
+
+    // MAGASIN EN HAUT
+
+
+    //
+
+    // PRODUIT EN BAS
+
+
+    //
+
+    /**
+     * Retourne le produit dont l'id est passé par paramètre
+     *
+     * @param id l'id du produit à retourner
+     * @return le produit dont l'id a été passé en paramètre
+     */
+    public Produit getProduit(long id) {
+        SQLiteDatabase db = this.getReadableDatabase(); // On veut lire dans la BD
+
+        Cursor cursor = db.query(NOM_TABLE_PRODUIT,
+                new String[]{PRODUIT_ID, PRODUIT_ID_MAGASIN_FK, PRODUIT_NOM, PRODUIT_QUANTITE,
+                        PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_PRIX_UNITAIRE, PRODUIT_IMAGE},
+                PRODUIT_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+
+        Produit produit = null;
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            produit = new Produit(cursor.getLong(0), cursor.getLong(1),
+                    cursor.getString(2), cursor.getLong(3), cursor.getString(4), cursor.getLong(5),
+                    cursor.getLong(6), DbBitmapUtility.getImage(cursor.getBlob(7)));
+        }
+
+
+        cursor.close();
+        db.close(); // Fermer la connexion
+
+        // Retourner le produit
+        return produit;
+    }
+
+    //TODO EN PRODUIT
+
+    /**
+     * Retourne la liste de tous les clients dans la base de données
+     *
+     * @return la liste de tous les clients
+     */
+    public List<Magasin> getListeProduits() {
+
+        List<Magasin> listeMagasins = new ArrayList<Magasin>();
+
+        SQLiteDatabase data = this.getReadableDatabase();
+
+        Magasin magasin;
+
+        Cursor cursor = data.query(NOM_TABLE_MAGASIN,
+                new String[]{MAGASIN_ID, MAGASIN_NOM, MAGASIN_IMAGE},
+                null, null, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+
+                do {
+                    magasin = new Magasin(cursor.getLong(0), cursor.getString(1),
+                            DbBitmapUtility.getImage(cursor.getBlob(2)));
+
+                    listeMagasins.add(magasin);
+                } while (cursor.moveToNext());
+
+            }
+        }
+        cursor.close();
+        return listeMagasins;
+    }
+
+    //TODO EN PRODUIT
+
+    /**
+     * Supprime un magasin de la base de données
+     *
+     * @param magasin le magasin à supprimer
+     */
+    public void deleteProduit(Magasin magasin) {
+        SQLiteDatabase db = this.getWritableDatabase(); // On veut écrire dans la BD
+        db.delete(NOM_TABLE_MAGASIN, MAGASIN_ID + " = ?",
+                new String[]{String.valueOf(magasin.getId())});
+        db.close();
+    }
+
+    //TODO EN PRODUIT
+
+    /**
+     * Ajoute un magasin à la base de données.
+     *
+     * @param magasinAAjouter Le client à ajouter.
+     * @return L'id du client ajouté.
+     */
+    public long ajouterProduit(Magasin magasinAAjouter) {
+        long idNouveauMagasin = -1;
+
+        SQLiteDatabase db = this.getWritableDatabase(); // On veut écrire dans la BD
+        ContentValues values = new ContentValues();
+        values.put(MAGASIN_NOM, magasinAAjouter.getNom());
+        values.put(MAGASIN_IMAGE, DbBitmapUtility.getBytes(magasinAAjouter.getImage()));
+
+        idNouveauMagasin = db.insert(NOM_TABLE_MAGASIN, null, values);
+
+        magasinAAjouter.setId(idNouveauMagasin);
+
+        db.close(); // Fermer la connexion
+
+        return idNouveauMagasin;
+    }
+
+    //TODO EN PRODUIT
+
+    /**
+     * Met à jour un magasin dans la BD
+     *
+     * @param magasin le magasin à mettre à jour avec les nouvelles informations
+     * @return true  si update réussi, sinon false;
+     */
+    public boolean updateProduit(Magasin magasin) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
