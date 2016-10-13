@@ -31,9 +31,9 @@ public class Produit {
      * @param nom          le nom du produit
      * @param quantite     la quantité de produit
      * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
-     * @param prix         le prix du produit
-     * @param prixUnitaire le prix unitaire du produit
-     * @param image        l'image du produit
+     * @param prix         le txtPrix du produit
+     * @param prixUnitaire le txtPrix unitaire du produit
+     * @param image        l'ivwImageProduit du produit
      */
     public Produit(long idMagasinFk, String nom, long quantite, String typeQuantite, double prix,
                    double prixUnitaire, Bitmap image) {
@@ -54,9 +54,9 @@ public class Produit {
      * @param nom          le nom du produit
      * @param quantite     la quantité de produit
      * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
-     * @param prix         le prix du produit
-     * @param prixUnitaire le prix unitaire du produit
-     * @param image        l'image du produit
+     * @param prix         le txtPrix du produit
+     * @param prixUnitaire le txtPrix unitaire du produit
+     * @param image        l'ivwImageProduit du produit
      */
     public Produit(long id, long idMagasinFk, String nom, long quantite, String typeQuantite,
                    double prix, double prixUnitaire, Bitmap image) {

@@ -62,7 +62,7 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.relative_layout_liste_magasins, null);
             holder = new MagasinHolder();
-            holder.txtNom = (TextView) convertView.findViewById(R.id.relative_layout_tvw_nom_magasin);
+            holder.txtNom = (TextView) convertView.findViewById(R.id.relative_layout_liste_magasins_tvw_nom_magasin);
             holder.img = (ImageView) convertView.findViewById(R.id.relative_layout_liste_magasins_img_magasin);
 
             convertView.setTag(holder);

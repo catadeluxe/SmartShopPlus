@@ -15,8 +15,6 @@ import ca.qc.bdeb.p55.smartshopplus.R;
 import ca.qc.bdeb.p55.smartshopplus.modele.Magasin;
 import ca.qc.bdeb.p55.smartshopplus.modele.Produit;
 
-import static android.R.attr.id;
-
 /**
  * Created by Catalin on 2016-09-14.
  */
@@ -47,7 +45,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     private ArrayList<Magasin> listeMagasins = new ArrayList<Magasin>();
-    // private ArrayList<Produit> listeProduits = new ArrayList<Produit>();
+    private ArrayList<Produit> listeProduits = new ArrayList<Produit>();
 
 
     public static DbHelper getInstance(Context context) {
@@ -72,6 +70,8 @@ public class DbHelper extends SQLiteOpenHelper {
         Bitmap imageMagasin = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.ic_store_black_48dp);
 
+        Bitmap imageProduit = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+
         listeMagasins.add(new Magasin("Super C", imageMagasin));
         listeMagasins.add(new Magasin("Dollarama", imageMagasin));
         listeMagasins.add(new Magasin("Costco", imageMagasin));
@@ -80,8 +80,11 @@ public class DbHelper extends SQLiteOpenHelper {
         listeMagasins.add(new Magasin("Tim Hortons", imageMagasin));
         listeMagasins.add(new Magasin("Bombardier", imageMagasin));
 
+        listeProduits.add(new Produit(1, "Coca-Cola", 2, "litres", 1.99, 0.995, imageProduit));
+
+
         // Création Strings commandes SQL à exécuter
-        String commandeSqlPermettreClesEtrangeres = "PRAGMA foreign_keys = 1;";
+        String commandeSqlPermettreClesEtrangeres = "PRAGMA foreign_keys = ON;";
 
         String commandeSqlCreationTableMagasin =
                 "CREATE TABLE " + NOM_TABLE_MAGASIN +
@@ -97,10 +100,10 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE + " REAL," +
                         PRODUIT_TYPE_QUANTITE + " TEXT," +
                         PRODUIT_PRIX + " REAL," +
-                        PRODUIT_PRIX_UNITAIRE + " REAL," +
+                        PRODUIT_PRIX_UNITAIRE + " REAL," + // TODO Voir si on peut avoit une BD sans le prix unitaire; valeur generee dynamiquement. On peut ajouter des constructeurs dans la classe Produit
                         PRODUIT_IMAGE + " BLOB," +
-                        "FOREIGN KEY(" + PRODUIT_ID_MAGASIN_FK +
-                        ") REFERENCES " + NOM_TABLE_MAGASIN + "(" + MAGASIN_ID + ")";
+                        "FOREIGN KEY (" + PRODUIT_ID_MAGASIN_FK +
+                        ") REFERENCES " + NOM_TABLE_MAGASIN + "(" + MAGASIN_ID + "))";
 
         // Exécution commandes SQL
         db.execSQL(commandeSqlPermettreClesEtrangeres);
@@ -116,6 +119,23 @@ public class DbHelper extends SQLiteOpenHelper {
             long id = db.insert(NOM_TABLE_MAGASIN, null, values);
 
             magasin.setId(id);
+        }
+
+        values = new ContentValues();
+
+        for (Produit prod : listeProduits) {
+            values.put(PRODUIT_ID_MAGASIN_FK, prod.getIdMagasinFk());
+            values.put(PRODUIT_NOM, prod.getNom());
+            values.put(PRODUIT_QUANTITE, prod.getQuantite());
+            values.put(PRODUIT_TYPE_QUANTITE, prod.getTypeQuantite());
+            values.put(PRODUIT_PRIX, prod.getPrix());
+            values.put(PRODUIT_PRIX_UNITAIRE, prod.getPrixUnitaire());
+           values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(prod.getImage()));
+
+            long id = db.insert(NOM_TABLE_PRODUIT, null, values);
+
+            prod.setId(id);
+
         }
     }
 
@@ -303,7 +323,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 new String[]{PRODUIT_ID, PRODUIT_ID_MAGASIN_FK, PRODUIT_NOM, PRODUIT_QUANTITE,
                         PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_PRIX_UNITAIRE, PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
+                new String[]{String.valueOf(id_magasin)}, null, null, null, null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,6 +31,11 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
     public class ProduitHolder {
         TextView txtNom;
+        TextView txtPrix;
+        TextView txtPrixUnitaire;
+        ImageView ivwImageProduit;
+
+
         public TextView getTxtNom() {
             return txtNom;
         }
@@ -38,6 +44,29 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
             this.txtNom = txtNom;
         }
 
+        public TextView getTxtPrix() {
+            return txtPrix;
+        }
+
+        public void setTxtPrix(TextView txtPrix) {
+            this.txtPrix = txtPrix;
+        }
+
+        public TextView getTxtPrixUnitaire() {
+            return txtPrixUnitaire;
+        }
+
+        public void setTxtPrixUnitaire(TextView txtPrixUnitaire) {
+            this.txtPrixUnitaire = txtPrixUnitaire;
+        }
+
+        public ImageView getIvwImageProduit() {
+            return ivwImageProduit;
+        }
+
+        public void setIvwImageProduit(ImageView ivwImageProduit) {
+            this.ivwImageProduit = ivwImageProduit;
+        }
     }
 
     @Override
@@ -49,10 +78,16 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
                 Activity.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.relative_layout_liste_magasins, null);
+            convertView = mInflater.inflate(R.layout.relative_layout_liste_produits, null);
             holder = new ProduitHolder();
-            holder.txtNom = (TextView) convertView.findViewById(R.id.relative_layout_tvw_nom_magasin);
-
+            holder.txtNom = (TextView)
+                    convertView.findViewById(R.id.relative_layout_liste_produits_tvw_nom_produit);
+            holder.txtPrix = (TextView)
+                    convertView.findViewById(R.id.relative_layout_liste_produits_tvw_prix_produit);
+            holder.txtPrixUnitaire = (TextView)
+                    convertView.findViewById(R.id.relative_layout_liste_produits_tvw_prix_unitaire);
+            holder.ivwImageProduit = (ImageView)
+                    convertView.findViewById(R.id.relative_layout_liste_produits_ivw_image_produit);
 
             convertView.setTag(holder);
         } else {
@@ -60,6 +95,9 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         }
 
         holder.txtNom.setText(rowItem.getNom());
+        holder.txtPrix.setText(String.valueOf((rowItem.getPrix())));
+        holder.txtPrixUnitaire.setText(String.valueOf(rowItem.getPrixUnitaire()));
+        holder.ivwImageProduit.setImageBitmap(rowItem.getImage());
 
         return convertView;
     }
@@ -67,5 +105,4 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
     public ProduitHolder getHolder() {
         return holder;
     }
-
 }

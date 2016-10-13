@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
              *
              * doc https://developer.android.com/reference/android/widget/AdapterView.OnItemClickListener.html
              * @param parent AdapterView: The AdapterView where the click happened.
-             * @param view View: The view within the AdapterView that was clicked (this will be a view provided by the adapter)
-             * @param position int: The position of the view in the adapter.
+             * @param view View: The view within the AdapterView that was clicked (this will be a view provided by the arrayAdapterProduits)
+             * @param position int: The position of the view in the arrayAdapterProduits.
              * @param id long: The row id of the item that was clicked.
              */
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -28,10 +28,10 @@ public class Magasin {
     }
 
     /**
-     * Constructeur qui prend en paramètre le nom du magasin et l'image
+     * Constructeur qui prend en paramètre le nom du magasin et l'ivwImageProduit
      *
      * @param nom   nom du magasin
-     * @param image image du magasin
+     * @param image ivwImageProduit du magasin
      */
     public Magasin(String nom, Bitmap image) {
         id = -1;
@@ -40,11 +40,11 @@ public class Magasin {
     }
 
     /**
-     * Constructeur qui prend en paramètre l'id, le nom et l'image du magasin
+     * Constructeur qui prend en paramètre l'id, le nom et l'ivwImageProduit du magasin
      *
      * @param id    id du magasin
      * @param nom   nom du magasib
-     * @param image image du magasin
+     * @param image ivwImageProduit du magasin
      */
     public Magasin(long id, String nom, Bitmap image) {
         this.id = id;
