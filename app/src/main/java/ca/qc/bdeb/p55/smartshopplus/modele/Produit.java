@@ -8,10 +8,12 @@ import android.graphics.Bitmap;
 
 public class Produit {
 
+    public static final long MULTIPLICATEUR_PRIX_UNITAIRE = 100L;
+
     private long id;
     private long idMagasinFk;
     private String nom;
-    private long quantite;
+    private double quantite;
     private String typeQuantite;
     private double prix;
     private double prixUnitaire;
@@ -32,17 +34,15 @@ public class Produit {
      * @param quantite     la quantité de produit
      * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
      * @param prix         le txtPrix du produit
-     * @param prixUnitaire le txtPrix unitaire du produit
      * @param image        l'ivwImageProduit du produit
      */
-    public Produit(long idMagasinFk, String nom, long quantite, String typeQuantite, double prix,
-                   double prixUnitaire, Bitmap image) {
+    public Produit(long idMagasinFk, String nom, double quantite, String typeQuantite, double prix,
+                   Bitmap image) {
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
         this.quantite = quantite;
         this.typeQuantite = typeQuantite;
         this.prix = prix;
-        this.prixUnitaire = prixUnitaire;
         this.image = image;
     }
 
@@ -55,18 +55,16 @@ public class Produit {
      * @param quantite     la quantité de produit
      * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
      * @param prix         le txtPrix du produit
-     * @param prixUnitaire le txtPrix unitaire du produit
      * @param image        l'ivwImageProduit du produit
      */
-    public Produit(long id, long idMagasinFk, String nom, long quantite, String typeQuantite,
-                   double prix, double prixUnitaire, Bitmap image) {
+    public Produit(long id, long idMagasinFk, String nom, double quantite, String typeQuantite,
+                   double prix, Bitmap image) {
         this.id = id;
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
         this.quantite = quantite;
         this.typeQuantite = typeQuantite;
         this.prix = prix;
-        this.prixUnitaire = prixUnitaire;
         this.image = image;
     }
 
@@ -94,7 +92,7 @@ public class Produit {
         this.nom = nom;
     }
 
-    public long getQuantite() {
+    public double getQuantite() {
         return quantite;
     }
 

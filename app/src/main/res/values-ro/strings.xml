@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SmartShopPlus</string>
+    <string name="title_product_list">Listă produse</string>
     <string name="desc_store_name">Nume magazin</string>
     <string name="hint_store_name">Introduceți nume magazin</string>
     <string name="desc_store_image">Imagine</string>

@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setTitle(getResources().getString(R.string.title_product_list) + " - " + getResources().getString(R.string.app_name));
+
         dbHelper = DbHelper.getInstance(getApplicationContext());
 
         listeMagasins = dbHelper.getListeMagasins();

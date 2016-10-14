@@ -96,7 +96,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
         holder.txtNom.setText(rowItem.getNom());
         holder.txtPrix.setText(String.valueOf((rowItem.getPrix())));
-        holder.txtPrixUnitaire.setText(String.valueOf(rowItem.getPrixUnitaire()));
+        holder.txtPrixUnitaire.setText(String.valueOf(rowItem.getPrix() / rowItem.getQuantite() * Produit.MULTIPLICATEUR_PRIX_UNITAIRE));
         holder.ivwImageProduit.setImageBitmap(rowItem.getImage());
 
         return convertView;

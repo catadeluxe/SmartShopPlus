@@ -39,7 +39,7 @@ public class MagasinActivity extends AppCompatActivity {
         idMag = intent.getLongExtra(MainActivity.EXTRA_MESSAGE, -1);
 
         magasin = dbHelper.getMagasin(idMag);
-        getSupportActionBar().setTitle(magasin.getNom());
+        getSupportActionBar().setTitle(magasin.getNom() + " - " + getResources().getString(R.string.app_name));
 
         listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
         lvwProduits = (ListView) findViewById(R.id.activity_magasin_lvw_produits);

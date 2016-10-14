@@ -40,7 +40,6 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String PRODUIT_QUANTITE = "qualtite";
     private static final String PRODUIT_TYPE_QUANTITE = "type_quantite";
     private static final String PRODUIT_PRIX = "prix";
-    private static final String PRODUIT_PRIX_UNITAIRE = "PRIX_UNITAIRE";
     private static final String PRODUIT_IMAGE = "image";
 
 
@@ -72,15 +71,18 @@ public class DbHelper extends SQLiteOpenHelper {
 
         Bitmap imageProduit = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
 
+        // Ajout magasins par défaut
         listeMagasins.add(new Magasin("Super C", imageMagasin));
         listeMagasins.add(new Magasin("Dollarama", imageMagasin));
         listeMagasins.add(new Magasin("Costco", imageMagasin));
         listeMagasins.add(new Magasin("Marchés TAU", imageMagasin));
         listeMagasins.add(new Magasin("Marché Jean-Talon", imageMagasin));
+        listeMagasins.add(new Magasin("Sami Fruits", imageMagasin));
         listeMagasins.add(new Magasin("Tim Hortons", imageMagasin));
         listeMagasins.add(new Magasin("Bombardier", imageMagasin));
 
-        listeProduits.add(new Produit(1, "Coca-Cola", 2, "litres", 1.99, 0.995, imageProduit));
+        // Ajout produits par défaut
+        listeProduits.add(new Produit(1, "Coca-Cola", 2000, "ml", 1.99, imageProduit));
 
 
         // Création Strings commandes SQL à exécuter
@@ -100,7 +102,6 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE + " REAL," +
                         PRODUIT_TYPE_QUANTITE + " TEXT," +
                         PRODUIT_PRIX + " REAL," +
-                        PRODUIT_PRIX_UNITAIRE + " REAL," + // TODO Voir si on peut avoit une BD sans le prix unitaire; valeur generee dynamiquement. On peut ajouter des constructeurs dans la classe Produit
                         PRODUIT_IMAGE + " BLOB," +
                         "FOREIGN KEY (" + PRODUIT_ID_MAGASIN_FK +
                         ") REFERENCES " + NOM_TABLE_MAGASIN + "(" + MAGASIN_ID + "))";
@@ -129,8 +130,7 @@ public class DbHelper extends SQLiteOpenHelper {
             values.put(PRODUIT_QUANTITE, prod.getQuantite());
             values.put(PRODUIT_TYPE_QUANTITE, prod.getTypeQuantite());
             values.put(PRODUIT_PRIX, prod.getPrix());
-            values.put(PRODUIT_PRIX_UNITAIRE, prod.getPrixUnitaire());
-           values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(prod.getImage()));
+            values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(prod.getImage()));
 
             long id = db.insert(NOM_TABLE_PRODUIT, null, values);
 
@@ -285,7 +285,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(NOM_TABLE_PRODUIT,
                 new String[]{PRODUIT_ID, PRODUIT_ID_MAGASIN_FK, PRODUIT_NOM, PRODUIT_QUANTITE,
-                        PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_PRIX_UNITAIRE, PRODUIT_IMAGE},
+                        PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_IMAGE},
                 PRODUIT_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
@@ -295,7 +295,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
             produit = new Produit(cursor.getLong(0), cursor.getLong(1),
                     cursor.getString(2), cursor.getLong(3), cursor.getString(4), cursor.getLong(5),
-                    cursor.getLong(6), DbBitmapUtility.getImage(cursor.getBlob(7)));
+                    DbBitmapUtility.getImage(cursor.getBlob(6)));
         }
 
 
@@ -320,18 +320,28 @@ public class DbHelper extends SQLiteOpenHelper {
         Produit produit;
 
         Cursor cursor = data.query(NOM_TABLE_PRODUIT,
-                new String[]{PRODUIT_ID, PRODUIT_ID_MAGASIN_FK, PRODUIT_NOM, PRODUIT_QUANTITE,
-                        PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_PRIX_UNITAIRE, PRODUIT_IMAGE},
+                new String[]{
+                        PRODUIT_ID,
+                        PRODUIT_ID_MAGASIN_FK,
+                        PRODUIT_NOM,
+                        PRODUIT_QUANTITE,
+                        PRODUIT_TYPE_QUANTITE,
+                        PRODUIT_PRIX,
+                        PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
                 new String[]{String.valueOf(id_magasin)}, null, null, null, null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    produit = new Produit(cursor.getLong(0), cursor.getLong(1),
-                            cursor.getString(2), cursor.getLong(3), cursor.getString(4),
-                            cursor.getLong(5), cursor.getLong(6),
-                            DbBitmapUtility.getImage(cursor.getBlob(7)));
+                    produit = new Produit(
+                            cursor.getLong(0),
+                            cursor.getLong(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getDouble(5),
+                            DbBitmapUtility.getImage(cursor.getBlob(6)));
 
                     listeProduits.add(produit);
                 } while (cursor.moveToNext());
@@ -341,62 +351,66 @@ public class DbHelper extends SQLiteOpenHelper {
         return listeProduits;
     }
 
-    //TODO EN PRODUIT
-
     /**
-     * Supprime un magasin de la base de données
+     * Supprime un produit de la base de données
      *
-     * @param magasin le magasin à supprimer
+     * @param produit le produit à supprimer
      */
-    public void deleteProduit(Magasin magasin) {
+    public void deleteProduit(Produit produit) {
         SQLiteDatabase db = this.getWritableDatabase(); // On veut écrire dans la BD
-        db.delete(NOM_TABLE_MAGASIN, MAGASIN_ID + " = ?",
-                new String[]{String.valueOf(magasin.getId())});
+        db.delete(NOM_TABLE_PRODUIT, PRODUIT_ID + " = ?",
+                new String[]{String.valueOf(produit.getId())});
         db.close();
     }
 
     //TODO EN PRODUIT
 
     /**
-     * Ajoute un magasin à la base de données.
+     * Ajoute un produit à la base de données.
      *
-     * @param magasinAAjouter Le client à ajouter.
-     * @return L'id du client ajouté.
+     * @param nouveauProduit Le produit à ajouter.
+     * @return L'id du produit ajouté.
      */
-    public long ajouterProduit(Magasin magasinAAjouter) {
-        long idNouveauMagasin = -1;
+    public long ajouterProduit(Produit nouveauProduit) {
+        long idNouveauProduit = -1;
 
         SQLiteDatabase db = this.getWritableDatabase(); // On veut écrire dans la BD
         ContentValues values = new ContentValues();
-        values.put(MAGASIN_NOM, magasinAAjouter.getNom());
-        values.put(MAGASIN_IMAGE, DbBitmapUtility.getBytes(magasinAAjouter.getImage()));
+        values.put(PRODUIT_ID_MAGASIN_FK, nouveauProduit.getIdMagasinFk());
+        values.put(PRODUIT_NOM, nouveauProduit.getNom());
+        values.put(PRODUIT_QUANTITE, nouveauProduit.getQuantite());
+        values.put(PRODUIT_TYPE_QUANTITE, nouveauProduit.getTypeQuantite());
+        values.put(PRODUIT_PRIX, nouveauProduit.getPrix());
+        values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(nouveauProduit.getImage()));
 
-        idNouveauMagasin = db.insert(NOM_TABLE_MAGASIN, null, values);
+        idNouveauProduit = db.insert(NOM_TABLE_MAGASIN, null, values);
 
-        magasinAAjouter.setId(idNouveauMagasin);
+        nouveauProduit.setId(idNouveauProduit);
 
         db.close(); // Fermer la connexion
 
-        return idNouveauMagasin;
+        return idNouveauProduit;
     }
 
-    //TODO EN PRODUIT
-
     /**
-     * Met à jour un magasin dans la BD
+     * Met à jour un produit dans la BD
      *
-     * @param magasin le magasin à mettre à jour avec les nouvelles informations
+     * @param nouveauProduit le produit à mettre à jour avec les nouvelles informations
      * @return true  si update réussi, sinon false;
      */
-    public boolean updateProduit(Magasin magasin) {
+    public boolean updateProduit(Produit nouveauProduit) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(MAGASIN_NOM, magasin.getNom());
-        values.put(MAGASIN_IMAGE, DbBitmapUtility.getBytes(magasin.getImage()));
+        values.put(PRODUIT_ID_MAGASIN_FK, nouveauProduit.getIdMagasinFk());
+        values.put(PRODUIT_NOM, nouveauProduit.getNom());
+        values.put(PRODUIT_QUANTITE, nouveauProduit.getQuantite());
+        values.put(PRODUIT_TYPE_QUANTITE, nouveauProduit.getTypeQuantite());
+        values.put(PRODUIT_PRIX, nouveauProduit.getPrix());
+        values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(nouveauProduit.getImage()));
 
         int nbMAJ = db.update(NOM_TABLE_MAGASIN, values, MAGASIN_ID + " = ?",
-                new String[]{String.valueOf(magasin.getId())});
+                new String[]{String.valueOf(nouveauProduit.getId())});
 
         return (nbMAJ > 0); // True si update réussi, sinon false
     }
