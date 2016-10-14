@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
              * @param id long: The row id of the item that was clicked.
              */
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+//
                 Magasin magClique = (Magasin) parent.getItemAtPosition(position);
 
                 Intent intent = new Intent(getBaseContext(), MagasinActivity.class);
