@@ -362,9 +362,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(produit.getId())});
         db.close();
     }
-
-    //TODO EN PRODUIT
-
+    
     /**
      * Ajoute un produit à la base de données.
      *

@@ -3,6 +3,7 @@ package ca.qc.bdeb.p55.smartshopplus.vue;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -69,4 +70,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Affiche et gonfle la barre de menu
+     *
+     * @param menu menu à gonfler
+     * @return true
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        return true;
+    }
+
 }

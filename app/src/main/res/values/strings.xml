@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">SmartShopPlus</string>
+
     <string name="title_product_list">Product List</string>
+
     <string name="desc_store_name">Store name</string>
     <string name="hint_store_name">Insert store name</string>
     <string name="desc_store_image">Image</string>
+
+    <string name="mnu_add">Add</string>
+    <string name="mnu_edit">Edit</string>
+    <string name="mnu_delete">Delete</string>
 
 
 </resources>
