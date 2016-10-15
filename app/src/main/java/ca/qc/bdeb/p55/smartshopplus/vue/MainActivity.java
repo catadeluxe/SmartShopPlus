@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
         listeMagasins = dbHelper.getListeMagasins();
 
         arrayAdapterMagasins = new ArrayAdapterMagasins(this, R.layout.relative_layout_liste_magasins, listeMagasins);

@@ -7,4 +7,11 @@
         android:orderInCategory="75"
         android:title="@string/mnu_delete"
         app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/mnu_supprimer_tous_produits"
+        android:icon="@drawable/ic_delete_sweep_white_48dp"
+        android:orderInCategory="75"
+        android:title="@string/mnu_remove_all_products"
+        app:showAsAction="never" />
 </menu>

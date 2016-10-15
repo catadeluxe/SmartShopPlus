@@ -1,18 +1,32 @@
 <resources>
-    <string name="app_name">SmartShopPlus</string>
+    <string name="app_name">aaSmartShopPlus</string> // TODO apply normal name
+
 
     <string name="title_product_list">Product List</string>
     <string name="title_add_store">Add store</string>
 
-    <string name="toast_store_successfully_added">Store successfully added</string>
+
+    <string name="dialog_title_erase_store">Attention</string>
+    <string name="dialog_message_erase_store">Deleting a store will also erase all the products within. Proceed?</string>
+    <string name="dialog_title_erase_all_products">Confirm</string>
+    <string name="dialog_message_erase_all_products">Delete all products?</string>
+
+
+    <string name="toast_store_successfully_added">Store added</string>
+    <string name="toast_store_successfully_erased">Store erased</string>
+    <string name="toast_all_products_successfully_erased">All products erased</string>
+
 
     <string name="desc_store_name">Store name</string>
     <string name="hint_store_name">Insert store name</string>
     <string name="desc_store_image">Image</string>
 
+
     <string name="mnu_add">Add</string>
     <string name="mnu_edit">Edit</string>
     <string name="mnu_delete">Delete</string>
+    <string name="mnu_remove_all_products">Remove all products</string>
+
 
     <string name="err_field_cannot_be_blank">This field cannot be blank</string>
 

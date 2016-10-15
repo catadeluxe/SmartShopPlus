@@ -412,4 +412,18 @@ public class DbHelper extends SQLiteOpenHelper {
 
         return (nbMAJ > 0); // True si update réussi, sinon false
     }
+
+    /**
+     * Supprime tous les produits d'un magasin. Ne supprime pas le magasin
+     *
+     * @param idMag l'id du magasin dont les produits sont à supprimer
+     */
+    public void supprimerTousProduitsMagasin(long idMag){
+        List<Produit> listeProduitsMagasin = getListeProduitsMagasin(idMag);
+
+        for(Produit produit : listeProduitsMagasin){
+            deleteProduit(produit);
+        }
+    }
+
 }

@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SmartShopPlus</string>
+    <string name="app_name">aaSmartShopPlus</string>
+
 
     <string name="title_product_list">Listă produse</string>
     <string name="title_add_store">Adăugare magazin</string>
 
-    <string name="toast_store_successfully_added">Magazin adăugat cu success</string>
+
+    <string name="dialog_title_erase_store">Atențiune</string>
+    <string name="dialog_message_erase_store">Ștergerea unui magazin va șterge de asemenea toate produsele magazinului. Continuare?</string>
+    <string name="dialog_title_erase_all_products">Confirmare</string>
+    <string name="dialog_message_erase_all_products">Ștergere toate produsele?</string>
+
+
+    <string name="toast_store_successfully_added">Magazin adăugat</string>
+    <string name="toast_store_successfully_erased">Magazin șters</string>
+    <string name="toast_all_products_successfully_erased">Toate produsele au fost șterse</string>
 
 
     <string name="desc_store_name">Nume magazin</string>
     <string name="hint_store_name">Introduceți nume magazin</string>
     <string name="desc_store_image">Imagine</string>
 
+
     <string name="mnu_add">Adăugare</string>
     <string name="mnu_edit">Modificare</string>
     <string name="mnu_delete">Ștergere</string>
+    <string name="mnu_remove_all_products">Ștergere toate produsele</string>
+
 
     <string name="err_field_cannot_be_blank">Acest câmp nu poate fi lăsat gol</string>
 

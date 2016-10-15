@@ -3,6 +3,7 @@ package ca.qc.bdeb.p55.smartshopplus.vue;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -78,7 +79,10 @@ public class MagasinActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mnu_supprimer:
-                affichierFenetreConfirmationSuppression();
+                affichierfenetreconfirmationsuppressionMagasin();
+                break;
+            case R.id.mnu_supprimer_tous_produits:
+                afficherFenetreSuppressionTousProduits();
                 break;
         }
         return true;
@@ -87,24 +91,77 @@ public class MagasinActivity extends AppCompatActivity {
     /**
      * Affiche fenêtre confirmatiom suppression magasin
      */
-    void affichierFenetreConfirmationSuppression() {
+    private void affichierfenetreconfirmationsuppressionMagasin() {
         new AlertDialog.Builder(this)
-                .setTitle("Title")
-                .setMessage("Do you really want to whatever?")
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(getResources().getString(R.string.dialog_title_erase_store))
+                .setMessage(getResources().getString(R.string.dialog_message_erase_store))
+                .setIcon(ContextCompat.getDrawable(this, R.drawable.ic_warning_black_48dp))
                 .setPositiveButton(android.R.string.yes,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                Toast.makeText(MagasinActivity.this, "Yaay", Toast.LENGTH_SHORT).show();
+                                supprimerMagasin();
                             }
                         })
-                .setNegativeButton(android.R.string.no,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                Toast.makeText(MagasinActivity.this, "Nope", Toast.LENGTH_SHORT).show();
-                            }
-                        }).show();
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
+    /**
+     * Supprime le magasin en cours. Étapes:
+     * 1 - Supprime tous les produits de la base de données;
+     * 2 - Efface le magasin en cours de la base de données.
+     * 3 - Affiche message de succès de suppression de magasin
+     * 4 - Termine l'activity
+     */
+    private void supprimerMagasin() {
+        dbHelper.supprimerTousProduitsMagasin(idMag);
+        dbHelper.deleteMagasin(magasin);
+        Toast.makeText(MagasinActivity.this,
+                getResources().getString(R.string.toast_store_successfully_erased),
+                Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    /**
+     * Affiche fenêtre confirmation suppression tous les prodiuts du magasin
+     */
+    private void afficherFenetreSuppressionTousProduits() {
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.dialog_title_erase_all_products))
+                .setMessage(getResources().getString(R.string.dialog_message_erase_all_products))
+                .setPositiveButton(android.R.string.yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                supprimerTousProduitsAvecMessage();
+                            }
+                        })
+                .setNegativeButton(android.R.string.no, null).show();
+    }
+
+    /**
+     * Supprime tous les produits du magasin en cours de la base de données. Étapes:
+     * 1 - Supprime tous les produits associés avec le magasin de la base de données
+     * 2 - Réinitialise l'activity pour que la vue corresponde aux données de la base de données
+     * 3 - Affiche message confirmation de succès de suppression de tous les produits
+     */
+    private void supprimerTousProduitsAvecMessage() {
+        dbHelper.supprimerTousProduitsMagasin(idMag);
+        reinitialiserActivity();
+        Toast.makeText(MagasinActivity.this,
+                getResources().getString(R.string.toast_all_products_successfully_erased),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Réinitialise les views dans l'activity.
+     * But: Que la vue corresponde aux données dans la base de données
+     */
+    private void reinitialiserActivity() {
+
+        listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
+
+        arrayAdapterProduits = new ArrayAdapterProduits(this, R.layout.relative_layout_liste_produits, listeProduits);
+
+        lvwProduits.setAdapter(arrayAdapterProduits);
+    }
 
 }
