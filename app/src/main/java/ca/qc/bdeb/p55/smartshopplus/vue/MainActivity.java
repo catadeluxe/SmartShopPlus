@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lvwMagasins;
     List<Magasin> listeMagasins;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         arrayAdapterMagasins = new ArrayAdapterMagasins(this, R.layout.relative_layout_liste_magasins, listeMagasins);
 
         lvwMagasins.setAdapter(arrayAdapterMagasins);
-
 
         /**
          * Évènement qui se déclenche lorsque l'utilisateur appuie sur une ligne de
