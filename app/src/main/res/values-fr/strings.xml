@@ -3,6 +3,9 @@
     <string name="app_name">SmartShopPlus</string>
 
     <string name="title_product_list">Liste produits</string>
+    <string name="title_add_store">Ajouter magasin</string>
+
+    <string name="toast_store_successfully_added">Magasin ajouté avec succès</string>
 
     <string name="desc_store_name">Nom magasin</string>
     <string name="hint_store_name">Saisir nom magasin</string>
@@ -12,5 +15,8 @@
     <string name="mnu_add">Ajouter</string>
     <string name="mnu_edit">Modifier</string>
     <string name="mnu_delete">Supprimer</string>
+
+    <string name="err_field_cannot_be_blank">Ce champ ne peut être vide</string>
+
 
 </resources>

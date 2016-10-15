@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
              * @param id long: The row id of the item that was clicked.
              */
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
+
                 Magasin magClique = (Magasin) parent.getItemAtPosition(position);
 
                 Intent intent = new Intent(getBaseContext(), MagasinActivity.class);
@@ -69,6 +70,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Actions à faire lorsqu'on revient à l'activité
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        listeMagasins = dbHelper.getListeMagasins();
+
+        arrayAdapterMagasins = new ArrayAdapterMagasins(this, R.layout.relative_layout_liste_magasins, listeMagasins);
+
+        lvwMagasins.setAdapter(arrayAdapterMagasins);
+
     }
 
     /**
@@ -83,4 +100,20 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Actions à faire lorsque l'utilisateur appuie sur les items du menu
+     *
+     * @param item l'item cliqué
+     * @return true
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mnu_ajouter:
+                Intent intent = new Intent(this, AjouterMagasinActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return true;
+    }
 }
