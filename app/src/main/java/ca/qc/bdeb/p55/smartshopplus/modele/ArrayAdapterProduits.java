@@ -96,7 +96,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
         holder.txtNom.setText(rowItem.getNom());
         holder.txtPrix.setText(String.valueOf((rowItem.getPrix())));
-        holder.txtPrixUnitaire.setText(String.valueOf(rowItem.getPrix() / rowItem.getQuantite() * Produit.MULTIPLICATEUR_PRIX_UNITAIRE));
+        holder.txtPrixUnitaire.setText(getPrixUnitaireString(rowItem));
         holder.ivwImageProduit.setImageBitmap(rowItem.getImage());
 
         return convertView;
@@ -104,5 +104,9 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
     public ProduitHolder getHolder() {
         return holder;
+    }
+
+    private String getPrixUnitaireString(Produit produit){
+        return String.valueOf(produit.getPrix() / produit.getQuantite() * Produit.MULTIPLICATEUR_PRIX_UNITAIRE);
     }
 }

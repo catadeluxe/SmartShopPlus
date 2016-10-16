@@ -54,11 +54,10 @@
         android:textSize="25sp" />
 
     <ImageButton
-        android:layout_height="300dp"
         android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_below="@+id/activity_ajouter_magasin_tvw_desc_image"
         android:layout_centerHorizontal="true"
         android:id="@+id/activity_ajouter_magasin_ibtn_image_magasin" />
-    android:id="@+id/activity_ajouter_magasin_ibtn_image_magasin"/>
 
 </RelativeLayout>

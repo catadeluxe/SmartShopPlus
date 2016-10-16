@@ -5,6 +5,7 @@
 
     <string name="title_product_list">Listă produse</string>
     <string name="title_add_store">Adăugare magazin</string>
+    <string name="title_add_product">Adăugare produs</string>
 
 
     <string name="dialog_title_erase_store">Atențiune</string>
@@ -21,6 +22,20 @@
     <string name="desc_store_name">Nume magazin</string>
     <string name="hint_store_name">Introduceți nume magazin</string>
     <string name="desc_store_image">Imagine</string>
+
+    <string name="desc_product_name">Nume produs</string>
+    <string name="hint_product_name">Introduceți nume produs</string>
+
+    <string name="desc_product_quantity">Cantitate</string>
+    <string name="hint_product_quantity">Introduceți cantitatea</string>
+
+    <string name="desc_product_quantity_type">Tip cantitate</string>
+    <string name="hint_product_quantity_type">l, ml, g, cm, UI etc.</string>
+
+    <string name="desc_product_price">Preț</string>
+    <string name="hint_product_price">Introduceți prețul</string>
+
+    <string name="desc_product_image">Imagine produs</string>
 
 
     <string name="mnu_add">Adăugare</string>

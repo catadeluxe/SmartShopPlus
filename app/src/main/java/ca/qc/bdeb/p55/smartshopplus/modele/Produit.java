@@ -16,7 +16,6 @@ public class Produit {
     private double quantite;
     private String typeQuantite;
     private double prix;
-    private double prixUnitaire;
     private Bitmap image;
 
 
@@ -114,14 +113,6 @@ public class Produit {
 
     public void setPrix(double prix) {
         this.prix = prix;
-    }
-
-    public double getPrixUnitaire() {
-        return prixUnitaire;
-    }
-
-    public void setPrixUnitaire(double prixUnitaire) {
-        this.prixUnitaire = prixUnitaire;
     }
 
     public Bitmap getImage() {

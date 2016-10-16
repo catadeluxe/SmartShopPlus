@@ -21,6 +21,7 @@ import ca.qc.bdeb.p55.smartshopplus.modele.Produit;
 
 public class MagasinActivity extends AppCompatActivity {
 
+    public static final String EXTRA_MESSAGE = "1";
 
     Magasin magasin;
     Long idMag;
@@ -50,7 +51,8 @@ public class MagasinActivity extends AppCompatActivity {
         listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
         lvwProduits = (ListView) findViewById(R.id.activity_magasin_lvw_produits);
 
-        arrayAdapterProduits = new ArrayAdapterProduits(this, R.layout.relative_layout_liste_produits, listeProduits);
+        arrayAdapterProduits = new ArrayAdapterProduits(this,
+                R.layout.relative_layout_liste_produits, listeProduits);
 
         lvwProduits.setAdapter(arrayAdapterProduits);
 
@@ -78,6 +80,11 @@ public class MagasinActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.mnu_ajouter:
+                Intent intent = new Intent(this, AjouterProduitActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, magasin.getId());
+                startActivity(intent);
+                break;
             case R.id.mnu_supprimer:
                 affichierfenetreconfirmationsuppressionMagasin();
                 break;
@@ -106,10 +113,10 @@ public class MagasinActivity extends AppCompatActivity {
     }
 
     /**
-     * Supprime le magasin en cours. Étapes:
-     * 1 - Supprime tous les produits de la base de données;
+     * Supprime le magasin en cours selon les étapes suivantes:
+     * 1 - Supprime tous les produits associés avec le magasin de la base de données.
      * 2 - Efface le magasin en cours de la base de données.
-     * 3 - Affiche message de succès de suppression de magasin
+     * 3 - Affiche message de succès de suppression de magasin.
      * 4 - Termine l'activity
      */
     private void supprimerMagasin() {
@@ -138,7 +145,8 @@ public class MagasinActivity extends AppCompatActivity {
     }
 
     /**
-     * Supprime tous les produits du magasin en cours de la base de données. Étapes:
+     * Supprime tous les produits du magasin en cours de la base de données selon les étapes
+     * suivantes:
      * 1 - Supprime tous les produits associés avec le magasin de la base de données
      * 2 - Réinitialise l'activity pour que la vue corresponde aux données de la base de données
      * 3 - Affiche message confirmation de succès de suppression de tous les produits
@@ -159,7 +167,8 @@ public class MagasinActivity extends AppCompatActivity {
 
         listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
 
-        arrayAdapterProduits = new ArrayAdapterProduits(this, R.layout.relative_layout_liste_produits, listeProduits);
+        arrayAdapterProduits = new ArrayAdapterProduits(this,
+                R.layout.relative_layout_liste_produits, listeProduits);
 
         lvwProduits.setAdapter(arrayAdapterProduits);
     }

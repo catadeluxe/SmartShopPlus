@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".vue.ModificationMagasinActivity" />
         <activity android:name=".vue.MagasinActivity" />
-        <activity android:name=".vue.AjouterMagasinActivity"></activity>
+        <activity android:name=".vue.AjouterMagasinActivity" />
+        <activity android:name=".vue.AjouterProduitActivity"></activity>
     </application>
 
 </manifest>

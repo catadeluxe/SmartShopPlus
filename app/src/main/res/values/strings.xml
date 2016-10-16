@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">aaSmartShopPlus</string> // TODO apply normal name
+    <string name="app_name">aaSmartShopPlus</string>
+    // TODO apply normal name
 
 
     <string name="title_product_list">Product List</string>
     <string name="title_add_store">Add store</string>
+    <string name="title_add_product">Add product</string>
 
 
     <string name="dialog_title_erase_store">Attention</string>
@@ -21,6 +23,19 @@
     <string name="hint_store_name">Insert store name</string>
     <string name="desc_store_image">Image</string>
 
+    <string name="desc_product_name">Product name</string>
+    <string name="hint_product_name">Insert product name</string>
+
+    <string name="desc_product_quantity">Quantity</string>
+    <string name="hint_product_quantity">Insert product quantity</string>
+
+    <string name="desc_product_quantity_type">Quantity type</string>
+    <string name="hint_product_quantity_type">l, ml, g, cm, oz, IU etc.</string>
+
+    <string name="desc_product_price">Price</string>
+    <string name="hint_product_price">Insert price</string>
+
+    <string name="desc_product_image">Product image</string>
 
     <string name="mnu_add">Add</string>
     <string name="mnu_edit">Edit</string>

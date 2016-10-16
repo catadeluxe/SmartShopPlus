@@ -5,7 +5,7 @@
 
     <string name="title_product_list">Liste produits</string>
     <string name="title_add_store">Ajouter magasin</string>
-
+    <string name="title_add_product">Ajouter produit</string>
 
     <string name="dialog_title_erase_store">Attention</string>
     <string name="dialog_message_erase_store">Lors de l\'effacement du magasin, tous les produits associés seront supprimés. Continuer?</string>
@@ -21,6 +21,20 @@
     <string name="desc_store_name">Nom magasin</string>
     <string name="hint_store_name">Saisir nom magasin</string>
     <string name="desc_store_image">Image</string>
+
+    <string name="desc_product_name">Nom produit</string>
+    <string name="hint_product_name">Saisir nom produit</string>
+
+    <string name="desc_product_quantity">Quantité</string>
+    <string name="hint_product_quantity">Saisir quantité</string>
+
+    <string name="desc_product_quantity_type">Type quantité</string>
+    <string name="hint_product_quantity_type">l, ml, g, cm, oz, UI etc.</string>
+
+    <string name="desc_product_price">Prix</string>
+    <string name="hint_product_price">Saisir prix</string>
+
+    <string name="desc_product_image">Image produit</string>
 
 
     <string name="mnu_add">Ajouter</string>
