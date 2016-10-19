@@ -2,49 +2,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:weightSum="1">
 
     <ImageView
+        android:id="@+id/relative_layout_liste_produits_ivw_image_produit"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/relative_layout_liste_produits_ivw_image_produit" />
+        android:layout_alignParentTop="true"
+        app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
-        android:text="Nom Produit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/relative_layout_liste_produits_tvw_nom_produit"
-        android:textSize="25sp"
-        android:layout_alignBottom="@+id/relative_layout_liste_produits_ivw_image_produit"
-        android:layout_toRightOf="@+id/relative_layout_liste_produits_ivw_image_produit"
-        android:layout_toEndOf="@+id/relative_layout_liste_produits_ivw_image_produit"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:text="Prix produit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/relative_layout_liste_produits_tvw_prix_produit"
-        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:maxEms="3"
+        android:text="Prix produit"
         android:textSize="25sp" />
 
     <TextView
-        android:text="Prix unitaire"
+        android:id="@+id/relative_layout_liste_produits_tvw_nom_produit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/relative_layout_liste_produits_tvw_prix_unitaire"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/relative_layout_liste_produits_ivw_image_produit"
+        android:layout_toRightOf="@+id/relative_layout_liste_produits_ivw_image_produit"
+        android:maxEms="5"
+        android:text="Nom Produit"
         android:textSize="25sp"
-        android:layout_below="@+id/relative_layout_liste_produits_tvw_prix_produit"
-        android:layout_marginTop="16dip"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/relative_layout_liste_produits_tvw_prix_unitaire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative_layout_liste_produits_tvw_nom_produit"
+        android:layout_toEndOf="@+id/relative_layout_liste_produits_ivw_image_produit"
+        android:layout_toRightOf="@+id/relative_layout_liste_produits_ivw_image_produit"
+        android:maxEms="10"
+        android:text="Prix unitaire"
+        android:textSize="25sp" />
 
 </RelativeLayout>

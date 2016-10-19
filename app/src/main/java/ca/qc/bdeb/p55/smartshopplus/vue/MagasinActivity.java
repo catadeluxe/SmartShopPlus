@@ -58,6 +58,22 @@ public class MagasinActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Actions à faire lorsqu'on revient à l'activité
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
+
+        arrayAdapterProduits = new ArrayAdapterProduits(this,
+                R.layout.relative_layout_liste_produits, listeProduits);
+
+        lvwProduits.setAdapter(arrayAdapterProduits);
+
+    }
+
 
     /**
      * Affiche et gonfle la barre de menu

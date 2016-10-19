@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import ca.qc.bdeb.p55.smartshopplus.R;
@@ -18,6 +20,9 @@ import ca.qc.bdeb.p55.smartshopplus.R;
  */
 
 public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
+
+    final String SYMBOLE_MONNAIE_UTILISEE = "$";
+    final String SYMBOLE_SEPARATEUR_MONNAIE_SUR_MULTIPLICATEUR_PRIX_UNITAIRE = "/";
 
     Context context;
 
@@ -95,7 +100,8 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         }
 
         holder.txtNom.setText(rowItem.getNom());
-        holder.txtPrix.setText(String.valueOf((rowItem.getPrix())));
+        holder.txtPrix.setText(String.valueOf((rowItem.getPrix())) +
+                " " + SYMBOLE_MONNAIE_UTILISEE);
         holder.txtPrixUnitaire.setText(getPrixUnitaireString(rowItem));
         holder.ivwImageProduit.setImageBitmap(rowItem.getImage());
 
@@ -106,7 +112,19 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         return holder;
     }
 
-    private String getPrixUnitaireString(Produit produit){
-        return String.valueOf(produit.getPrix() / produit.getQuantite() * Produit.MULTIPLICATEUR_PRIX_UNITAIRE);
+    private String getPrixUnitaireString(Produit produit) {
+        String prixUnitaireArrondi = "";
+
+        // Arrondit à 5 décimales de précision
+        DecimalFormat df = new DecimalFormat("#.#####");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        prixUnitaireArrondi = String.valueOf(df.format(produit.getPrix() / produit.getQuantite()
+                * Produit.MULTIPLICATEUR_PRIX_UNITAIRE) + " " + SYMBOLE_MONNAIE_UTILISEE +
+                SYMBOLE_SEPARATEUR_MONNAIE_SUR_MULTIPLICATEUR_PRIX_UNITAIRE +
+                Produit.MULTIPLICATEUR_PRIX_UNITAIRE + " " + produit.getTypeQuantite());
+
+
+        return prixUnitaireArrondi;
     }
 }
