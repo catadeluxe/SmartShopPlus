@@ -95,7 +95,7 @@ public class Produit {
         return quantite;
     }
 
-    public void setQuantite(long quantite) {
+    public void setQuantite(double quantite) {
         this.quantite = quantite;
     }
 

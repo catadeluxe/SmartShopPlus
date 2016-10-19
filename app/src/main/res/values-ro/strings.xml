@@ -17,6 +17,8 @@
     <string name="toast_store_successfully_added">Magazin adăugat</string>
     <string name="toast_store_successfully_erased">Magazin șters</string>
     <string name="toast_all_products_successfully_erased">Toate produsele au fost șterse</string>
+    <string name="toast_product_successfully_added">Produs adăugat</string>
+    <string name="toast_product_successfully_erased">Produs șters</string>
 
 
     <string name="desc_store_name">Nume magazin</string>

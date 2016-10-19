@@ -381,7 +381,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(PRODUIT_PRIX, nouveauProduit.getPrix());
         values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(nouveauProduit.getImage()));
 
-        idNouveauProduit = db.insert(NOM_TABLE_MAGASIN, null, values);
+        idNouveauProduit = db.insert(NOM_TABLE_PRODUIT, null, values);
 
         nouveauProduit.setId(idNouveauProduit);
 
@@ -407,7 +407,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(PRODUIT_PRIX, nouveauProduit.getPrix());
         values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(nouveauProduit.getImage()));
 
-        int nbMAJ = db.update(NOM_TABLE_MAGASIN, values, MAGASIN_ID + " = ?",
+        int nbMAJ = db.update(NOM_TABLE_PRODUIT, values, MAGASIN_ID + " = ?",
                 new String[]{String.valueOf(nouveauProduit.getId())});
 
         return (nbMAJ > 0); // True si update réussi, sinon false

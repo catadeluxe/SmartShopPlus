@@ -1,6 +1,8 @@
 package ca.qc.bdeb.p55.smartshopplus.vue;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -26,6 +28,7 @@ public class AjouterProduitActivity extends AppCompatActivity {
     EditText edtTypeQuantite;
     EditText edtPrix;
 
+    Bitmap imageProduit;
     ImageButton ibtnProduit;
 
 
@@ -43,6 +46,9 @@ public class AjouterProduitActivity extends AppCompatActivity {
 
         // assigne les variables d'instance aux Views qui se retrouvent dans la vue
         assignerVariablesAuxViews();
+
+        imageProduit = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        ibtnProduit.setImageBitmap(imageProduit);
 
         getSupportActionBar().setTitle(getResources().getString(R.string.title_add_product)
                 + " - " + getResources().getString(R.string.app_name));
@@ -70,13 +76,15 @@ public class AjouterProduitActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mnu_valider:
-                // TODO validations et ajout
+                if (verifierTousChampsBienRemplis()) {
+                    dbHelper.ajouterProduit(creerProduitAvecDonneesView());
+                    Toast.makeText(AjouterProduitActivity.this,
+                            getResources().getString(R.string.toast_product_successfully_added),
+                            Toast.LENGTH_SHORT).show();
+                    finish();
+                }
 
-                Toast.makeText(AjouterProduitActivity.this,
-                        "Valider ajout nouveau produit",
-                        Toast.LENGTH_SHORT).show();
                 break;
-
         }
         return true;
     }
@@ -132,19 +140,22 @@ public class AjouterProduitActivity extends AppCompatActivity {
         return tousChampsValides;
     }
 
+    /**
+     * Prend les données entrés dans la vue, crée et un objet Produit avec.
+     * Ne fait pas de validation
+     *
+     * @return l'objet Produit crée
+     */
     private Produit creerProduitAvecDonneesView() {
         Produit produit = new Produit();
 
         produit.setIdMagasinFk(idMag);
         produit.setNom(edtNom.getText().toString().trim());
-        produit.setQuantite(Long.getLong(edtQuantite.getText().toString().trim()));
+        produit.setQuantite(Double.parseDouble(edtQuantite.getText().toString().trim()));
         produit.setTypeQuantite(edtTypeQuantite.getText().toString().trim());
         produit.setPrix(Double.parseDouble(edtPrix.getText().toString().trim()));
+        produit.setImage(imageProduit);
 
-        // TODO
-      //  Bitmap imageMagasin = BitmapFactory.decodeResource(getResources(), ibtnProduit.get);
-     //   produit.setImage();
         return produit;
     }
-
 }
