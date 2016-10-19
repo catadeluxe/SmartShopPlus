@@ -7,9 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import ca.qc.bdeb.p55.smartshopplus.R;
 import ca.qc.bdeb.p55.smartshopplus.bd.DbHelper;
+import ca.qc.bdeb.p55.smartshopplus.modele.Produit;
 
 public class AjouterProduitActivity extends AppCompatActivity {
 
@@ -68,7 +70,11 @@ public class AjouterProduitActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mnu_valider:
-// TODO
+                // TODO validations et ajout
+
+                Toast.makeText(AjouterProduitActivity.this,
+                        "Valider ajout nouveau produit",
+                        Toast.LENGTH_SHORT).show();
                 break;
 
         }
@@ -124,6 +130,21 @@ public class AjouterProduitActivity extends AppCompatActivity {
         }
 
         return tousChampsValides;
+    }
+
+    private Produit creerProduitAvecDonneesView() {
+        Produit produit = new Produit();
+
+        produit.setIdMagasinFk(idMag);
+        produit.setNom(edtNom.getText().toString().trim());
+        produit.setQuantite(Long.getLong(edtQuantite.getText().toString().trim()));
+        produit.setTypeQuantite(edtTypeQuantite.getText().toString().trim());
+        produit.setPrix(Double.parseDouble(edtPrix.getText().toString().trim()));
+
+        // TODO
+      //  Bitmap imageMagasin = BitmapFactory.decodeResource(getResources(), ibtnProduit.get);
+     //   produit.setImage();
+        return produit;
     }
 
 }
