@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 
 public class Produit {
 
-    public static final long MULTIPLICATEUR_PRIX_UNITAIRE = 100L;
+    public static final double MULTIPLICATEUR_PRIX_UNITAIRE = 100d;
 
     private long id;
     private long idMagasinFk;
@@ -16,6 +16,7 @@ public class Produit {
     private double quantite;
     private String typeQuantite;
     private double prix;
+    private int qualite;
     private Bitmap image;
 
 
@@ -33,16 +34,19 @@ public class Produit {
      * @param quantite     la quantité de produit
      * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
      * @param prix         le txtPrix du produit
+     * @param qualite      la qualité du produit
      * @param image        l'ivwImageProduit du produit
      */
     public Produit(long idMagasinFk, String nom, double quantite, String typeQuantite, double prix,
-                   Bitmap image) {
+                   int qualite, Bitmap image) {
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
         this.quantite = quantite;
         this.typeQuantite = typeQuantite;
         this.prix = prix;
+        this.qualite = qualite;
         this.image = image;
+
     }
 
     /**
@@ -54,16 +58,18 @@ public class Produit {
      * @param quantite     la quantité de produit
      * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
      * @param prix         le txtPrix du produit
+     * @param qualite      la qualité du produit
      * @param image        l'ivwImageProduit du produit
      */
     public Produit(long id, long idMagasinFk, String nom, double quantite, String typeQuantite,
-                   double prix, Bitmap image) {
+                   double prix, int qualite, Bitmap image) {
         this.id = id;
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
         this.quantite = quantite;
         this.typeQuantite = typeQuantite;
         this.prix = prix;
+        this.qualite = qualite;
         this.image = image;
     }
 
@@ -113,6 +119,14 @@ public class Produit {
 
     public void setPrix(double prix) {
         this.prix = prix;
+    }
+
+    public int getQualite() {
+        return qualite;
+    }
+
+    public void setQualite(int qualite) {
+        this.qualite = qualite;
     }
 
     public Bitmap getImage() {

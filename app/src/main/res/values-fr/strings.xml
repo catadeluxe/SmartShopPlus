@@ -20,6 +20,7 @@
     <string name="toast_product_successfully_erased">Produit supprimé</string>
     <string name="toast_changes_applied">Modifications appliquées</string>
 
+    <string name="lbl_quality">Qualité :</string>
 
 
     <string name="desc_store_name">Nom magasin</string>
@@ -33,10 +34,13 @@
     <string name="hint_product_quantity">Saisir quantité</string>
 
     <string name="desc_product_quantity_type">Type quantité</string>
-    <string name="hint_product_quantity_type">l, ml, g, cm, oz, UI etc.</string>
+    <string name="hint_product_quantity_type">ml, kg, cm², IU, croissants, etc.</string>
 
     <string name="desc_product_price">Prix</string>
     <string name="hint_product_price">Saisir prix</string>
+
+    <string name="desc_product_quality">Qualité</string>
+
 
     <string name="desc_product_image">Image produit</string>
 

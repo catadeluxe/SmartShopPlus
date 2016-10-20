@@ -57,4 +57,14 @@
         android:layout_centerVertical="true"
         app:srcCompat="@mipmap/ic_launcher" />
 
+    <TextView
+        android:text="Qualite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative_layout_liste_produits_tvw_prix_unitaire"
+        android:layout_alignLeft="@+id/relative_layout_liste_produits_tvw_prix_unitaire"
+        android:layout_alignStart="@+id/relative_layout_liste_produits_tvw_prix_unitaire"
+        android:id="@+id/relative_layout_liste_produits_tvw_qualite"
+        android:textSize="25sp" />
+
 </RelativeLayout>

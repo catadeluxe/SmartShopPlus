@@ -40,6 +40,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String PRODUIT_QUANTITE = "qualtite";
     private static final String PRODUIT_TYPE_QUANTITE = "type_quantite";
     private static final String PRODUIT_PRIX = "prix";
+    private static final String PRODUIT_QUALITE = "qualite";
     private static final String PRODUIT_IMAGE = "image";
 
 
@@ -82,7 +83,7 @@ public class DbHelper extends SQLiteOpenHelper {
         listeMagasins.add(new Magasin("Bombardier", imageMagasin));
 
         // Ajout produits par défaut
-        listeProduits.add(new Produit(1, "Coca-Cola", 2000, "ml", 1.99, imageProduit));
+        listeProduits.add(new Produit(1, "Coca-Cola", 2000, "ml", 1.99, 5, imageProduit));
 
 
         // Création Strings commandes SQL à exécuter
@@ -102,6 +103,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE + " REAL," +
                         PRODUIT_TYPE_QUANTITE + " TEXT," +
                         PRODUIT_PRIX + " REAL," +
+                        PRODUIT_QUALITE + " INTEGER," +
                         PRODUIT_IMAGE + " BLOB," +
                         "FOREIGN KEY (" + PRODUIT_ID_MAGASIN_FK +
                         ") REFERENCES " + NOM_TABLE_MAGASIN + "(" + MAGASIN_ID + "))";
@@ -130,6 +132,7 @@ public class DbHelper extends SQLiteOpenHelper {
             values.put(PRODUIT_QUANTITE, prod.getQuantite());
             values.put(PRODUIT_TYPE_QUANTITE, prod.getTypeQuantite());
             values.put(PRODUIT_PRIX, prod.getPrix());
+            values.put(PRODUIT_QUALITE, prod.getQualite());
             values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(prod.getImage()));
 
             long id = db.insert(NOM_TABLE_PRODUIT, null, values);
@@ -285,7 +288,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(NOM_TABLE_PRODUIT,
                 new String[]{PRODUIT_ID, PRODUIT_ID_MAGASIN_FK, PRODUIT_NOM, PRODUIT_QUANTITE,
-                        PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_IMAGE},
+                        PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_QUALITE, PRODUIT_IMAGE},
                 PRODUIT_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
@@ -295,7 +298,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
             produit = new Produit(cursor.getLong(0), cursor.getLong(1),
                     cursor.getString(2), cursor.getLong(3), cursor.getString(4), cursor.getLong(5),
-                    DbBitmapUtility.getImage(cursor.getBlob(6)));
+                    cursor.getInt(6), DbBitmapUtility.getImage(cursor.getBlob(7)));
         }
 
 
@@ -327,6 +330,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE,
                         PRODUIT_TYPE_QUANTITE,
                         PRODUIT_PRIX,
+                        PRODUIT_QUALITE,
                         PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
                 new String[]{String.valueOf(id_magasin)}, null, null, null, null);
@@ -341,7 +345,8 @@ public class DbHelper extends SQLiteOpenHelper {
                             cursor.getDouble(3),
                             cursor.getString(4),
                             cursor.getDouble(5),
-                            DbBitmapUtility.getImage(cursor.getBlob(6)));
+                            cursor.getInt(6),
+                            DbBitmapUtility.getImage(cursor.getBlob(7)));
 
                     listeProduits.add(produit);
                 } while (cursor.moveToNext());
@@ -362,7 +367,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(produit.getId())});
         db.close();
     }
-    
+
     /**
      * Ajoute un produit à la base de données.
      *
@@ -379,6 +384,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(PRODUIT_QUANTITE, nouveauProduit.getQuantite());
         values.put(PRODUIT_TYPE_QUANTITE, nouveauProduit.getTypeQuantite());
         values.put(PRODUIT_PRIX, nouveauProduit.getPrix());
+        values.put(PRODUIT_QUALITE, nouveauProduit.getQualite());
         values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(nouveauProduit.getImage()));
 
         idNouveauProduit = db.insert(NOM_TABLE_PRODUIT, null, values);
@@ -405,6 +411,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(PRODUIT_QUANTITE, nouveauProduit.getQuantite());
         values.put(PRODUIT_TYPE_QUANTITE, nouveauProduit.getTypeQuantite());
         values.put(PRODUIT_PRIX, nouveauProduit.getPrix());
+        values.put(PRODUIT_QUALITE, nouveauProduit.getQualite());
         values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(nouveauProduit.getImage()));
 
         int nbMAJ = db.update(NOM_TABLE_PRODUIT, values, MAGASIN_ID + " = ?",
@@ -418,10 +425,10 @@ public class DbHelper extends SQLiteOpenHelper {
      *
      * @param idMag l'id du magasin dont les produits sont à supprimer
      */
-    public void supprimerTousProduitsMagasin(long idMag){
+    public void supprimerTousProduitsMagasin(long idMag) {
         List<Produit> listeProduitsMagasin = getListeProduitsMagasin(idMag);
 
-        for(Produit produit : listeProduitsMagasin){
+        for (Produit produit : listeProduitsMagasin) {
             deleteProduit(produit);
         }
     }

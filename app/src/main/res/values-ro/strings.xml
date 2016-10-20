@@ -21,6 +21,8 @@
     <string name="toast_product_successfully_erased">Produs șters</string>
     <string name="toast_changes_applied">Modificări aplicate</string>
 
+    <string name="lbl_quality">Calitate :</string>
+
 
     <string name="desc_store_name">Nume magazin</string>
     <string name="hint_store_name">Introduceți nume magazin</string>
@@ -33,10 +35,14 @@
     <string name="hint_product_quantity">Introduceți cantitatea</string>
 
     <string name="desc_product_quantity_type">Tip cantitate</string>
-    <string name="hint_product_quantity_type">l, ml, g, cm, UI etc.</string>
+    <string name="hint_product_quantity_type">ml, kg, cm², IU, croasante, etc.</string>
+
 
     <string name="desc_product_price">Preț</string>
     <string name="hint_product_price">Introduceți prețul</string>
+
+    <string name="desc_product_quality">Calitate</string>
+
 
     <string name="desc_product_image">Imagine produs</string>
 

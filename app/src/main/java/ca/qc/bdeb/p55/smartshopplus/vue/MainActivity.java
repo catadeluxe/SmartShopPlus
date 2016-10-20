@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         lvwMagasins = (ListView) findViewById(R.id.activity_main_lvw_magasins);
 
-        arrayAdapterMagasins = new ArrayAdapterMagasins(this, R.layout.relative_layout_liste_magasins, listeMagasins);
+        arrayAdapterMagasins = new ArrayAdapterMagasins(this,
+                R.layout.relative_layout_liste_magasins, listeMagasins);
 
         lvwMagasins.setAdapter(arrayAdapterMagasins);
 
@@ -81,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
         listeMagasins = dbHelper.getListeMagasins();
 
-        arrayAdapterMagasins = new ArrayAdapterMagasins(this, R.layout.relative_layout_liste_magasins, listeMagasins);
+        arrayAdapterMagasins = new ArrayAdapterMagasins(this,
+                R.layout.relative_layout_liste_magasins, listeMagasins);
 
         lvwMagasins.setAdapter(arrayAdapterMagasins);
 

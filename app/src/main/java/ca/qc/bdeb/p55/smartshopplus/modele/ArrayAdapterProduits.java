@@ -23,6 +23,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
     final String SYMBOLE_MONNAIE_UTILISEE = "$";
     final String SYMBOLE_SEPARATEUR_MONNAIE_SUR_MULTIPLICATEUR_PRIX_UNITAIRE = "/";
+    final String SUFFIXE_QUALITE = "/5";
 
     Context context;
 
@@ -39,6 +40,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         TextView txtQuantite;
         TextView txtPrix;
         TextView txtPrixUnitaire;
+        TextView txtQualite;
         ImageView ivwImageProduit;
 
 
@@ -81,6 +83,14 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         public void setIvwImageProduit(ImageView ivwImageProduit) {
             this.ivwImageProduit = ivwImageProduit;
         }
+
+        public TextView getTxtQualite() {
+            return txtQualite;
+        }
+
+        public void setTxtQualite(TextView txtQualite) {
+            this.txtQualite = txtQualite;
+        }
     }
 
     @Override
@@ -102,6 +112,8 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
                     convertView.findViewById(R.id.relative_layout_liste_produits_tvw_prix_produit);
             holder.txtPrixUnitaire = (TextView)
                     convertView.findViewById(R.id.relative_layout_liste_produits_tvw_prix_unitaire);
+            holder.txtQualite = (TextView)
+                    convertView.findViewById(R.id.relative_layout_liste_produits_tvw_qualite);
             holder.ivwImageProduit = (ImageView)
                     convertView.findViewById(R.id.relative_layout_liste_produits_ivw_image_produit);
 
@@ -114,6 +126,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         holder.txtQuantite.setText(rowItem.getQuantite() + " " + rowItem.getTypeQuantite());
         holder.txtPrix.setText(getPrixString(rowItem));
         holder.txtPrixUnitaire.setText(getPrixUnitaireString(rowItem));
+        holder.txtQualite.setText(getQualiteString(rowItem));
         holder.ivwImageProduit.setImageBitmap(rowItem.getImage());
 
         return convertView;
@@ -179,5 +192,19 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
         prixString = String.valueOf(prixString + " " + SYMBOLE_MONNAIE_UTILISEE);
         return prixString;
+    }
+
+    /**
+     * Retourne un String de format qualité selon le produit reçu en paramètre
+     *
+     * @param produit le produit pour faire un String de format qualité
+     * @return le String de format qualité
+     */
+    private String getQualiteString(Produit produit) {
+        String qualiteString = "";
+
+        qualiteString = context.getResources().getString(R.string.lbl_quality) + " " +
+                produit.getQualite() + SUFFIXE_QUALITE;
+        return qualiteString;
     }
 }

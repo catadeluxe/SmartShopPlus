@@ -21,7 +21,9 @@
     <string name="toast_product_successfully_erased">Product erased</string>
     <string name="toast_changes_applied">Changes applied</string>
 
-    <string name="toast_an_err">Changes saved</string>
+    <string name="lbl_quality">Quality :</string>
+
+
 
 
     <string name="desc_store_name">Store name</string>
@@ -35,10 +37,12 @@
     <string name="hint_product_quantity">Insert product quantity</string>
 
     <string name="desc_product_quantity_type">Quantity type</string>
-    <string name="hint_product_quantity_type">l, ml, g, cm, oz, IU etc.</string>
+    <string name="hint_product_quantity_type">ml, kg, cm², IU, croissants, etc.</string>
 
     <string name="desc_product_price">Price</string>
     <string name="hint_product_price">Insert price</string>
+
+    <string name="desc_product_quality">Quality</string>
 
     <string name="desc_product_image">Product image</string>
 
@@ -47,6 +51,8 @@
     <string name="mnu_delete">Delete</string>
     <string name="mnu_apply">Apply</string>
     <string name="mnu_remove_all_products">Remove all products</string>
+
+
 
 
     <string name="err_field_cannot_be_blank">This field cannot be blank</string>

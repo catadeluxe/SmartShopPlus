@@ -30,6 +30,7 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
 
     public class MagasinHolder {
         TextView txtNom;
+        TextView txtNbProduits;
         ImageView img;
 
 
@@ -39,6 +40,14 @@ public class ArrayAdapterMagasins extends ArrayAdapter<Magasin> {
 
         public void setImg(ImageView img) {
             this.img = img;
+        }
+
+        public TextView getTxtNbProduits() {
+            return txtNbProduits;
+        }
+
+        public void setTxtNbProduits(TextView txtNbProduits) {
+            this.txtNbProduits = txtNbProduits;
         }
 
         public TextView getTxtNom() {
