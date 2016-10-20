@@ -164,11 +164,19 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
     private String getPrixString(Produit produit) {
         String prixString = "";
 
-        // Arrondit à 5 décimales de précision
-        DecimalFormat df = new DecimalFormat("#.#####");
-        df.setRoundingMode(RoundingMode.CEILING);
+        DecimalFormat df;
+        if (produit.getPrix() % 1.0D != 0) {
+            // Arrondit à 5 décimales de précision
+            df = new DecimalFormat("0.#####");
+            df.setRoundingMode(RoundingMode.CEILING);
+            prixString = df.format(produit.getPrix());
+        } else {
+            df = new DecimalFormat("#.00");
+            df.setRoundingMode(RoundingMode.CEILING);
+            prixString = df.format(produit.getPrix());
+        }
 
-        prixString = String.valueOf(df.format(produit.getPrix()) + " " + SYMBOLE_MONNAIE_UTILISEE);
+        prixString = String.valueOf(prixString + " " + SYMBOLE_MONNAIE_UTILISEE);
         return prixString;
     }
 }

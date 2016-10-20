@@ -8,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -56,6 +58,31 @@ public class MagasinActivity extends AppCompatActivity {
 
         lvwProduits.setAdapter(arrayAdapterProduits);
 
+        /**
+         * Évènement qui se déclenche lorsque l'utilisateur appuie sur une ligne de
+         * la liste de produits
+         *
+         */
+        lvwProduits.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            /**
+             * Déclenche l'activité ModifierProduitActivity lorsqu'un produit a été appuyé
+             *
+             * doc https://developer.android.com/reference/android/widget/AdapterView.OnItemClickListener.html
+             * @param parent AdapterView: The AdapterView where the click happened.
+             * @param view View: The view within the AdapterView that was clicked (this will be a view provided by the arrayAdapterProduits)
+             * @param position int: The position of the view in the arrayAdapterProduits.
+             * @param id long: The row id of the item that was clicked.
+             */
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Produit prodClique = (Produit) parent.getItemAtPosition(position);
+                Intent intent = new Intent(getBaseContext(), ModificationMagasinActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, prodClique.getId());
+                startActivity(intent);
+            }
+        });
+
     }
 
     /**
@@ -64,14 +91,7 @@ public class MagasinActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
-
-        arrayAdapterProduits = new ArrayAdapterProduits(this,
-                R.layout.relative_layout_liste_produits, listeProduits);
-
-        lvwProduits.setAdapter(arrayAdapterProduits);
-
+        reinitialiserActivity();
     }
 
 
