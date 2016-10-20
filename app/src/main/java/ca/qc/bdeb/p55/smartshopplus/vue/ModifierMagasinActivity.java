@@ -8,7 +8,7 @@ import ca.qc.bdeb.p55.smartshopplus.R;
 import ca.qc.bdeb.p55.smartshopplus.bd.DbHelper;
 import ca.qc.bdeb.p55.smartshopplus.modele.Magasin;
 
-public class ModificationMagasinActivity extends AppCompatActivity {
+public class ModifierMagasinActivity extends AppCompatActivity {
 
     Magasin magasin;
     Long idMag;

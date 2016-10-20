@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         lvwMagasins.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             /**
-             * Déclenche l'activité ModificationMagasinActivity lorsqu'un magasin a été appuyé
+             * Déclenche l'activité ModifierMagasinActivity lorsqu'un magasin a été appuyé
              *
              * doc https://developer.android.com/reference/android/widget/AdapterView.OnItemClickListener.html
              * @param parent AdapterView: The AdapterView where the click happened.

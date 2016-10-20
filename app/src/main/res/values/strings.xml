@@ -19,6 +19,7 @@
     <string name="toast_all_products_successfully_erased">All products erased</string>
     <string name="toast_product_successfully_added">Product added</string>
     <string name="toast_product_successfully_erased">Product erased</string>
+    <string name="toast_changes_saved">Changes saved</string>
 
 
     <string name="desc_store_name">Store name</string>

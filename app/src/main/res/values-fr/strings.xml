@@ -18,6 +18,8 @@
     <string name="toast_all_products_successfully_erased">Tous les produits ont été supprimés</string>
     <string name="toast_product_successfully_added">Produit ajouté</string>
     <string name="toast_product_successfully_erased">Produit supprimé</string>
+    <string name="toast_changes_saved">Modifications enregistrées</string>
+
 
     <string name="desc_store_name">Nom magasin</string>
     <string name="hint_store_name">Saisir nom magasin</string>

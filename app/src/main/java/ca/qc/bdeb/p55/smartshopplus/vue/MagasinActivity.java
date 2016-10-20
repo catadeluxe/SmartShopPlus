@@ -77,7 +77,7 @@ public class MagasinActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Produit prodClique = (Produit) parent.getItemAtPosition(position);
-                Intent intent = new Intent(getBaseContext(), ModificationMagasinActivity.class);
+                Intent intent = new Intent(getBaseContext(), ModifierProduitActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, prodClique.getId());
                 startActivity(intent);
             }
