@@ -112,8 +112,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
         holder.txtNom.setText(rowItem.getNom());
         holder.txtQuantite.setText(rowItem.getQuantite() + " " + rowItem.getTypeQuantite());
-        holder.txtPrix.setText(String.valueOf((rowItem.getPrix())) +
-                " " + SYMBOLE_MONNAIE_UTILISEE);
+        holder.txtPrix.setText(getPrixString(rowItem));
         holder.txtPrixUnitaire.setText(getPrixUnitaireString(rowItem));
         holder.ivwImageProduit.setImageBitmap(rowItem.getImage());
 
@@ -124,6 +123,20 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         return holder;
     }
 
+    /**
+     * Prend un produit en paramètre et retourne le prix unitaire de ce produit
+     * selon le format suivant:
+     * 1. Prix unitaire à 5 décimales de précision
+     * 2. Espace
+     * 3. Symbole de la monnaie utilisée
+     * 4. Symbole séparateur entre monnaie utilisée et quantité unitaire
+     * 5. Quantité unitaire
+     * 6. Espace
+     * 7. Type de quantité
+     *
+     * @param produit le produit dont le prix unitaire en format String est à retourner
+     * @return String de prixu nitaire selon le format expliqué précédemment
+     */
     private String getPrixUnitaireString(Produit produit) {
         String prixUnitaireArrondi = "";
 
@@ -136,7 +149,26 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
                 SYMBOLE_SEPARATEUR_MONNAIE_SUR_MULTIPLICATEUR_PRIX_UNITAIRE +
                 Produit.MULTIPLICATEUR_PRIX_UNITAIRE + " " + produit.getTypeQuantite());
 
-
         return prixUnitaireArrondi;
+    }
+
+    /**
+     * Prend un produit en paramètre et retourne le prix de ce produit selon le format suivant:
+     * 1. Le prix du produit à 5 décimales de précision
+     * 2. Espace
+     * 3. Le symbole de la monnaie utilisée
+     *
+     * @param produit le produit dont le prix est à convertir en String
+     * @return le String de prix qui a été converti selon le frmat expliqué précédemment
+     */
+    private String getPrixString(Produit produit) {
+        String prixString = "";
+
+        // Arrondit à 5 décimales de précision
+        DecimalFormat df = new DecimalFormat("#.#####");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        prixString = String.valueOf(df.format(produit.getPrix()) + " " + SYMBOLE_MONNAIE_UTILISEE);
+        return prixString;
     }
 }
