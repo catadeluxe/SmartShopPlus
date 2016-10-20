@@ -18,7 +18,8 @@
     <string name="toast_all_products_successfully_erased">Tous les produits ont été supprimés</string>
     <string name="toast_product_successfully_added">Produit ajouté</string>
     <string name="toast_product_successfully_erased">Produit supprimé</string>
-    <string name="toast_changes_saved">Modifications enregistrées</string>
+    <string name="toast_changes_applied">Modifications appliquées</string>
+
 
 
     <string name="desc_store_name">Nom magasin</string>
@@ -48,6 +49,9 @@
 
 
     <string name="err_field_cannot_be_blank">Ce champ ne peut être vide</string>
+
+
+    <string name="intent_gallery_picker">Sélectionner image</string>
 
 
 </resources>

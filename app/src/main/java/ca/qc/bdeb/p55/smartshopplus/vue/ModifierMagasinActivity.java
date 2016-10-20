@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -35,8 +34,7 @@ public class ModifierMagasinActivity extends AppCompatActivity {
     EditText edtNomMagasin;
     ImageButton iBtnImageMagasin;
 
-    String imgDecodableString;
-    private Uri imageUri;
+    Bitmap imageMagasin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +49,11 @@ public class ModifierMagasinActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(magasin.getNom() + " - " + getResources().getString(R.string.app_name));
 
+
         // assigne les variables d'instance aux Views qui se retrouvent dans la vue
         assignerVariablesAuxViews();
 
+        imageMagasin = magasin.getImage();
         peuplerViewsAvecDonneesProduit();
 
         iBtnImageMagasin.setOnClickListener(new View.OnClickListener() {
@@ -64,11 +64,13 @@ public class ModifierMagasinActivity extends AppCompatActivity {
                 Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 getIntent.setType("image/*");
 
-                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 pickIntent.setType("image/*");
 
-                Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-                
+                Intent chooserIntent = Intent.createChooser(getIntent,
+                        getResources().getString(R.string.intent_gallery_picker));
+
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
                 startActivityForResult(chooserIntent, IMAGE_PICK);
@@ -77,7 +79,28 @@ public class ModifierMagasinActivity extends AppCompatActivity {
         });
     }
 
-    // When a result is returned from another Activity onActivityResult is called.
+    /**
+     * When a result is returned from another Activity onActivityResult is called.
+     *
+     * doc https://developer.android.com/reference/android/app/Activity.html#onActivityResult(int,%20int,%20android.content.Intent)
+     *
+     * Called when an activity you launched exits, giving you the requestCode you started it with,
+     * the resultCode it returned, and any additional data from it. The resultCode will be
+     * RESULT_CANCELED if the activity explicitly returned that, didn't return any result, or
+     * crashed during its operation.
+     *
+     * You will receive this call immediately before onResume() when your activity is re-starting.
+     *
+     * This method is never invoked if your activity sets noHistory to true.
+     *
+     * @param requestCode int: The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this result came
+     *                    from.
+     * @param resultCode  int: The integer result code returned by the child activity through its
+     *                    setResult().
+     * @param data        Intent: An Intent, which can return result data to the caller (various
+     *                    data can be attached to Intent "extras").
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -95,11 +118,11 @@ public class ModifierMagasinActivity extends AppCompatActivity {
                         InputStream inputStream = this.getContentResolver().openInputStream(data.getData());
 
                         BitmapFactory.Options options = new BitmapFactory.Options();
-                        options.inSampleSize = 8;
-                        Bitmap preview_bitmap = BitmapFactory.decodeStream(inputStream, null, options);
+                        options.inSampleSize = 4;
+                        imageMagasin = BitmapFactory.decodeStream(inputStream, null, options);
 
-                        this.magasin.setImage(preview_bitmap);
-                        this.iBtnImageMagasin.setImageBitmap(this.magasin.getImage());
+                        this.magasin.setImage(imageMagasin);
+                        this.iBtnImageMagasin.setImageBitmap(imageMagasin);
 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -134,7 +157,7 @@ public class ModifierMagasinActivity extends AppCompatActivity {
                 if (verifierTousChampsBienRemplis()) {
                     dbHelper.updateMagasin(creerMagasinAvecDonneesView());
                     Toast.makeText(ModifierMagasinActivity.this,
-                            getResources().getString(R.string.toast_changes_saved),
+                            getResources().getString(R.string.toast_changes_applied),
                             Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -158,7 +181,7 @@ public class ModifierMagasinActivity extends AppCompatActivity {
      */
     private void peuplerViewsAvecDonneesProduit() {
         edtNomMagasin.setText(magasin.getNom());
-        iBtnImageMagasin.setImageBitmap(magasin.getImage());
+        iBtnImageMagasin.setImageBitmap(imageMagasin);
     }
 
     /**
@@ -193,8 +216,7 @@ public class ModifierMagasinActivity extends AppCompatActivity {
 
         magasinCree.setNom(edtNomMagasin.getText().toString().trim());
 
-        // TODO image utilisateur
-        magasinCree.setImage(this.magasin.getImage());
+        magasinCree.setImage(imageMagasin);
 
         return magasinCree;
     }

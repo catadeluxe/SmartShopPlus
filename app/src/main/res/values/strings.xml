@@ -19,7 +19,7 @@
     <string name="toast_all_products_successfully_erased">All products erased</string>
     <string name="toast_product_successfully_added">Product added</string>
     <string name="toast_product_successfully_erased">Product erased</string>
-    <string name="toast_changes_saved">Changes saved</string>
+    <string name="toast_changes_applied">Changes applied</string>
 
     <string name="toast_an_err">Changes saved</string>
 
@@ -50,5 +50,8 @@
 
 
     <string name="err_field_cannot_be_blank">This field cannot be blank</string>
+
+
+    <string name="intent_gallery_picker">Select image</string>
 
 </resources>

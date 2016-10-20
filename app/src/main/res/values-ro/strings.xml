@@ -19,7 +19,7 @@
     <string name="toast_all_products_successfully_erased">Toate produsele au fost șterse</string>
     <string name="toast_product_successfully_added">Produs adăugat</string>
     <string name="toast_product_successfully_erased">Produs șters</string>
-    <string name="toast_changes_saved">Modificări înregistrate</string>
+    <string name="toast_changes_applied">Modificări aplicate</string>
 
 
     <string name="desc_store_name">Nume magazin</string>
@@ -49,5 +49,9 @@
 
 
     <string name="err_field_cannot_be_blank">Acest câmp nu poate fi lăsat gol</string>
+
+
+    <string name="intent_gallery_picker">Selectare imagine</string>
+
 
 </resources>
