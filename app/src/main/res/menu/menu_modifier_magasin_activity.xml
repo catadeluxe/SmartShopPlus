@@ -5,6 +5,6 @@
         android:id="@+id/mnu_valider"
         android:icon="@drawable/ic_check_white_24dp"
         android:orderInCategory="75"
-        android:title="@string/mnu_add"
+        android:title="@string/mnu_apply"
         app:showAsAction="ifRoom|withText" />
 </menu>

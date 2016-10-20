@@ -56,7 +56,7 @@ public class ModifierProduitActivity extends AppCompatActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_mofidier_produit_activity, menu);
+        getMenuInflater().inflate(R.menu.menu_modifier_produit_activity, menu);
         return true;
     }
 

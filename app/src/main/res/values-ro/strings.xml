@@ -44,6 +44,7 @@
     <string name="mnu_add">Adăugare</string>
     <string name="mnu_edit">Modificare</string>
     <string name="mnu_delete">Ștergere</string>
+    <string name="mnu_apply">Aplicare</string>
     <string name="mnu_remove_all_products">Ștergere toate produsele</string>
 
 

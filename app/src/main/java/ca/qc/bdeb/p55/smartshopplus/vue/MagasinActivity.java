@@ -47,16 +47,9 @@ public class MagasinActivity extends AppCompatActivity {
         intent = getIntent();
         idMag = intent.getLongExtra(MainActivity.EXTRA_MESSAGE, -1);
 
-        magasin = dbHelper.getMagasin(idMag);
-        getSupportActionBar().setTitle(magasin.getNom() + " - " + getResources().getString(R.string.app_name));
-
-        listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
         lvwProduits = (ListView) findViewById(R.id.activity_magasin_lvw_produits);
 
-        arrayAdapterProduits = new ArrayAdapterProduits(this,
-                R.layout.relative_layout_liste_produits, listeProduits);
-
-        lvwProduits.setAdapter(arrayAdapterProduits);
+        reinitialiserActivity();
 
         /**
          * Évènement qui se déclenche lorsque l'utilisateur appuie sur une ligne de
@@ -118,6 +111,11 @@ public class MagasinActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.mnu_ajouter:
                 Intent intent = new Intent(this, AjouterProduitActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, magasin.getId());
+                startActivity(intent);
+                break;
+            case R.id.mnu_modifier:
+                intent = new Intent(this, ModifierMagasinActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, magasin.getId());
                 startActivity(intent);
                 break;
@@ -200,8 +198,11 @@ public class MagasinActivity extends AppCompatActivity {
      * But: Que la vue corresponde aux données dans la base de données
      */
     private void reinitialiserActivity() {
-
+        magasin = dbHelper.getMagasin(idMag);
         listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
+
+        getSupportActionBar().setTitle(magasin.getNom() +
+                " - " + getResources().getString(R.string.app_name));
 
         arrayAdapterProduits = new ArrayAdapterProduits(this,
                 R.layout.relative_layout_liste_produits, listeProduits);

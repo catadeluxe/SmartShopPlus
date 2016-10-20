@@ -166,7 +166,8 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
         DecimalFormat df;
         if (produit.getPrix() % 1.0D != 0) {
-            // Arrondit à 5 décimales de précision
+            // Arrondit à 5 décimales de précision.
+            // Affiche les deux premières décimales même si elles valent zéro
             df = new DecimalFormat("0.00###");
             df.setRoundingMode(RoundingMode.CEILING);
             prixString = df.format(produit.getPrix());

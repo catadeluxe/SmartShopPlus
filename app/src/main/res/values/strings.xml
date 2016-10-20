@@ -43,6 +43,7 @@
     <string name="mnu_add">Add</string>
     <string name="mnu_edit">Edit</string>
     <string name="mnu_delete">Delete</string>
+    <string name="mnu_apply">Apply</string>
     <string name="mnu_remove_all_products">Remove all products</string>
 
 
