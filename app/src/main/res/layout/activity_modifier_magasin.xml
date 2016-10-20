@@ -56,8 +56,11 @@
 
     <ImageButton
         android:id="@+id/activity_modifier_magasin_ibtn_image_magasin"
-        android:layout_width="200dip"
-        android:layout_height="wrap_content"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:layout_below="@+id/activity_modifier_magasin_tvw_desc_image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dip" />

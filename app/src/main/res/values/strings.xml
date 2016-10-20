@@ -21,6 +21,8 @@
     <string name="toast_product_successfully_erased">Product erased</string>
     <string name="toast_changes_saved">Changes saved</string>
 
+    <string name="toast_an_err">Changes saved</string>
+
 
     <string name="desc_store_name">Store name</string>
     <string name="hint_store_name">Insert store name</string>
