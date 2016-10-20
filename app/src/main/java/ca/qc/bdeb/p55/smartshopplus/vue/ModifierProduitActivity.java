@@ -180,6 +180,7 @@ public class ModifierProduitActivity extends AppCompatActivity {
         edtQuantite = (EditText) findViewById(R.id.activity_modifier_produit_edt_quantite);
         edtTypeQuantite = (EditText) findViewById(R.id.activity_modifier_produit_edt_type_quantite);
         edtPrix = (EditText) findViewById(R.id.activity_modifier_produit_edt_prix);
+        ratingBar = (RatingBar) findViewById(R.id.activity_modifier_produit_rbar_qualite);
         ibtnProduit = (ImageButton) findViewById(R.id.activity_modifier_produit_ibtn_image_produit);
     }
 
@@ -191,6 +192,7 @@ public class ModifierProduitActivity extends AppCompatActivity {
         edtQuantite.setText(String.valueOf(produit.getQuantite()));
         edtTypeQuantite.setText(produit.getTypeQuantite());
         edtPrix.setText(String.valueOf(produit.getPrix()));
+        ratingBar.setRating(produit.getQualite());
         ibtnProduit.setImageBitmap(produit.getImage());
     }
 
@@ -249,8 +251,8 @@ public class ModifierProduitActivity extends AppCompatActivity {
         produitCree.setQuantite(Double.parseDouble(edtQuantite.getText().toString().trim()));
         produitCree.setTypeQuantite(edtTypeQuantite.getText().toString().trim());
         produitCree.setPrix(Double.parseDouble(edtPrix.getText().toString().trim()));
+        produitCree.setQualite(ratingBar.getRating());
         produitCree.setImage(imageProduit);
-        // TODO rating
 
         return produitCree;
     }

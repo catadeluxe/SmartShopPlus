@@ -83,7 +83,7 @@ public class DbHelper extends SQLiteOpenHelper {
         listeMagasins.add(new Magasin("Bombardier", imageMagasin));
 
         // Ajout produits par défaut
-        listeProduits.add(new Produit(1, "Coca-Cola", 2000, "ml", 1.99, 5, imageProduit));
+        listeProduits.add(new Produit(1, "Coca-Cola", 2000, "ml", 1.99, 5f, imageProduit));
 
 
         // Création Strings commandes SQL à exécuter
@@ -103,7 +103,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE + " REAL," +
                         PRODUIT_TYPE_QUANTITE + " TEXT," +
                         PRODUIT_PRIX + " REAL," +
-                        PRODUIT_QUALITE + " INTEGER," +
+                        PRODUIT_QUALITE + " REAL," +
                         PRODUIT_IMAGE + " BLOB," +
                         "FOREIGN KEY (" + PRODUIT_ID_MAGASIN_FK +
                         ") REFERENCES " + NOM_TABLE_MAGASIN + "(" + MAGASIN_ID + "))";
@@ -298,7 +298,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
             produit = new Produit(cursor.getLong(0), cursor.getLong(1),
                     cursor.getString(2), cursor.getLong(3), cursor.getString(4), cursor.getLong(5),
-                    cursor.getInt(6), DbBitmapUtility.getImage(cursor.getBlob(7)));
+                    cursor.getFloat(6), DbBitmapUtility.getImage(cursor.getBlob(7)));
         }
 
 
@@ -345,7 +345,7 @@ public class DbHelper extends SQLiteOpenHelper {
                             cursor.getDouble(3),
                             cursor.getString(4),
                             cursor.getDouble(5),
-                            cursor.getInt(6),
+                            cursor.getFloat(6),
                             DbBitmapUtility.getImage(cursor.getBlob(7)));
 
                     listeProduits.add(produit);

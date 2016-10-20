@@ -16,7 +16,7 @@ public class Produit {
     private double quantite;
     private String typeQuantite;
     private double prix;
-    private int qualite;
+    private float qualite;
     private Bitmap image;
 
 
@@ -38,7 +38,7 @@ public class Produit {
      * @param image        l'ivwImageProduit du produit
      */
     public Produit(long idMagasinFk, String nom, double quantite, String typeQuantite, double prix,
-                   int qualite, Bitmap image) {
+                   float qualite, Bitmap image) {
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
         this.quantite = quantite;
@@ -62,7 +62,7 @@ public class Produit {
      * @param image        l'ivwImageProduit du produit
      */
     public Produit(long id, long idMagasinFk, String nom, double quantite, String typeQuantite,
-                   double prix, int qualite, Bitmap image) {
+                   double prix, float qualite, Bitmap image) {
         this.id = id;
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
@@ -121,11 +121,11 @@ public class Produit {
         this.prix = prix;
     }
 
-    public int getQualite() {
+    public float getQualite() {
         return qualite;
     }
 
-    public void setQualite(int qualite) {
+    public void setQualite(float qualite) {
         this.qualite = qualite;
     }
 
