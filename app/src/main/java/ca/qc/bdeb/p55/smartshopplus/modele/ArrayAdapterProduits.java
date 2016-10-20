@@ -36,6 +36,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
     public class ProduitHolder {
         TextView txtNom;
+        TextView txtQuantite;
         TextView txtPrix;
         TextView txtPrixUnitaire;
         ImageView ivwImageProduit;
@@ -47,6 +48,14 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
         public void setTxtNom(TextView txtNom) {
             this.txtNom = txtNom;
+        }
+
+        public TextView getTxtQuantite() {
+            return txtQuantite;
+        }
+
+        public void setTxtQuantite(TextView txtQuantite) {
+            this.txtQuantite = txtQuantite;
         }
 
         public TextView getTxtPrix() {
@@ -87,6 +96,8 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
             holder = new ProduitHolder();
             holder.txtNom = (TextView)
                     convertView.findViewById(R.id.relative_layout_liste_produits_tvw_nom_produit);
+            holder.txtQuantite = (TextView)
+                    convertView.findViewById(R.id.relative_layout_liste_produits_tvw_quantite);
             holder.txtPrix = (TextView)
                     convertView.findViewById(R.id.relative_layout_liste_produits_tvw_prix_produit);
             holder.txtPrixUnitaire = (TextView)
@@ -100,6 +111,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         }
 
         holder.txtNom.setText(rowItem.getNom());
+        holder.txtQuantite.setText(rowItem.getQuantite() + " " + rowItem.getTypeQuantite());
         holder.txtPrix.setText(String.valueOf((rowItem.getPrix())) +
                 " " + SYMBOLE_MONNAIE_UTILISEE);
         holder.txtPrixUnitaire.setText(getPrixUnitaireString(rowItem));
