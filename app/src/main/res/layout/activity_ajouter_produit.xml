@@ -117,16 +117,6 @@
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
-        android:id="@+id/activity_aouter_produit_tvw_desc_qualite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/activity_aouter_produit_edt_prix"
-        android:text="@string/lbl_quality"
-        android:textSize="25sp" />
-
-    <TextView
         android:id="@+id/activity_ajouter_produit_tvw_desc_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -145,5 +135,25 @@
         android:layout_below="@+id/activity_aouter_produit_tvw_desc_qualite"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/activity_aouter_produit_tvw_desc_qualite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_quality"
+        android:textSize="25sp"
+        android:layout_below="@+id/activity_aouter_produit_chkbox_en_rabais"
+        android:layout_alignLeft="@+id/activity_aouter_produit_chkbox_en_rabais"
+        android:layout_alignStart="@+id/activity_aouter_produit_chkbox_en_rabais" />
+
+    <CheckBox
+        android:text="@string/checkbox_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_aouter_produit_chkbox_en_rabais"
+        android:layout_below="@+id/activity_aouter_produit_edt_prix"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="25sp" />
 </RelativeLayout>
 </ScrollView>

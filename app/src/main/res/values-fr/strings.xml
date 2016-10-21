@@ -39,6 +39,9 @@
     <string name="desc_product_price">Prix</string>
     <string name="hint_product_price">Saisir prix</string>
 
+    <string name="checkbox_discount">En rabais?</string>
+
+
     <string name="desc_product_quality">Qualité</string>
 
 

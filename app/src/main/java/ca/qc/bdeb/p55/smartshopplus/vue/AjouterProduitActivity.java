@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
@@ -36,12 +37,10 @@ public class AjouterProduitActivity extends AppCompatActivity {
     EditText edtQuantite;
     EditText edtTypeQuantite;
     EditText edtPrix;
-
+    CheckBox chkboxRabais;
     RatingBar ratingBar;
-
     Bitmap imageProduit;
     ImageButton ibtnProduit;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,6 +210,7 @@ public class AjouterProduitActivity extends AppCompatActivity {
         edtQuantite = (EditText) findViewById(R.id.activity_aouter_produit_edt_quantite);
         edtTypeQuantite = (EditText) findViewById(R.id.activity_aouter_produit_edt_type_quantite);
         edtPrix = (EditText) findViewById(R.id.activity_aouter_produit_edt_prix);
+        chkboxRabais = (CheckBox) findViewById(R.id.activity_aouter_produit_chkbox_en_rabais);
         ratingBar = (RatingBar) findViewById((R.id.activity_ajouter_produit_rbar_qualite));
         ibtnProduit = (ImageButton) findViewById(R.id.activity_ajouter_produit_ibtn_image_produit);
     }
@@ -269,6 +269,7 @@ public class AjouterProduitActivity extends AppCompatActivity {
         produit.setQuantite(Double.parseDouble(edtQuantite.getText().toString().trim()));
         produit.setTypeQuantite(edtTypeQuantite.getText().toString().trim());
         produit.setPrix(Double.parseDouble(edtPrix.getText().toString().trim()));
+        produit.setEnRabais(chkboxRabais.isChecked());
         produit.setQualite(ratingBar.getRating());
         produit.setImage(imageProduit);
 

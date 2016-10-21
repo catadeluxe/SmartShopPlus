@@ -40,6 +40,8 @@
     <string name="desc_product_price">Price</string>
     <string name="hint_product_price">Insert price</string>
 
+    <string name="checkbox_discount">Discount item</string>
+
     <string name="desc_product_quality">Quality</string>
 
     <string name="desc_product_image">Product image</string>

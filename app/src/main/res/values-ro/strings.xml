@@ -43,6 +43,8 @@
 
     <string name="desc_product_quality">Calitate</string>
 
+    <string name="checkbox_discount">Reducere</string>
+
 
     <string name="desc_product_image">Imagine produs</string>
 
@@ -61,7 +63,6 @@
     <string name="mnu_contact_developer">Contactare dezvoltator</string>
 
 
-
     <string name="err_field_cannot_be_blank">Acest câmp nu poate fi lăsat gol</string>
 
 
@@ -72,7 +73,6 @@
     <string name="intent_email_subject">SmartShopPlus</string>
     <string name="intent_email_body">SmartShopPlus este super!</string>
     <string name="intent_email_no_clients_installed">Nici un client e-mail nu este instalat</string>
-
 
 
 </resources>

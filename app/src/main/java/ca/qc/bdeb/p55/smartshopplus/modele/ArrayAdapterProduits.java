@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         TextView txtQuantite;
         TextView txtPrix;
         TextView txtPrixUnitaire;
+        CheckBox chkboxEnRabais;
         TextView txtQualite;
         ImageView ivwImageProduit;
 
@@ -68,6 +70,14 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
         public void setTxtPrix(TextView txtPrix) {
             this.txtPrix = txtPrix;
+        }
+
+        public CheckBox getChkboxEnRabais() {
+            return chkboxEnRabais;
+        }
+
+        public void setChkboxEnRabais(CheckBox chkboxEnRabais) {
+            this.chkboxEnRabais = chkboxEnRabais;
         }
 
         public TextView getTxtPrixUnitaire() {
@@ -114,6 +124,8 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
                     convertView.findViewById(R.id.relative_layout_liste_produits_tvw_prix_produit);
             holder.txtPrixUnitaire = (TextView)
                     convertView.findViewById(R.id.relative_layout_liste_produits_tvw_prix_unitaire);
+            holder.chkboxEnRabais = (CheckBox)
+                    convertView.findViewById(R.id.relative_layout_liste_produits_checkbox_en_rabais);
             holder.txtQualite = (TextView)
                     convertView.findViewById(R.id.relative_layout_liste_produits_tvw_qualite);
             holder.ivwImageProduit = (ImageView)
@@ -127,6 +139,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         holder.txtNom.setText(rowItem.getNom());
         holder.txtQuantite.setText(getQuantiteString(rowItem));
         holder.txtPrix.setText(getPrixString(rowItem));
+        holder.chkboxEnRabais.setChecked(rowItem.isEnRabais());
         holder.txtPrixUnitaire.setText(getPrixUnitaireString(rowItem));
         holder.txtQualite.setText(getQualiteString(rowItem));
         holder.ivwImageProduit.setImageBitmap(rowItem.getImage());

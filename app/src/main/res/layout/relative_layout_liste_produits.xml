@@ -39,16 +39,6 @@
         android:text="Prix produit"
         android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/relative_layout_liste_produits_tvw_prix_unitaire"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/relative_layout_liste_produits_tvw_prix_produit"
-        android:layout_alignStart="@+id/relative_layout_liste_produits_tvw_prix_produit"
-        android:layout_below="@+id/relative_layout_liste_produits_tvw_prix_produit"
-        android:text="Prix unitaire"
-        android:textSize="25sp" />
-
     <ImageView
         android:id="@+id/relative_layout_liste_produits_ivw_image_produit"
         android:layout_width="80dp"
@@ -66,5 +56,28 @@
         android:layout_alignStart="@+id/relative_layout_liste_produits_tvw_prix_unitaire"
         android:id="@+id/relative_layout_liste_produits_tvw_qualite"
         android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/relative_layout_liste_produits_tvw_prix_unitaire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prix unitaire"
+        android:textSize="25sp"
+        android:layout_below="@+id/relative_layout_liste_produits_checkbox_en_rabais"
+        android:layout_alignLeft="@+id/relative_layout_liste_produits_checkbox_en_rabais"
+        android:layout_alignStart="@+id/relative_layout_liste_produits_checkbox_en_rabais" />
+
+    <CheckBox
+        android:text="@string/checkbox_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:id="@+id/relative_layout_liste_produits_checkbox_en_rabais"
+        android:layout_below="@+id/relative_layout_liste_produits_tvw_prix_produit"
+        android:layout_alignLeft="@+id/relative_layout_liste_produits_tvw_prix_produit"
+        android:layout_alignStart="@+id/relative_layout_liste_produits_tvw_prix_produit"
+        android:textSize="25sp"
+        android:enabled="false" />
 
 </RelativeLayout>

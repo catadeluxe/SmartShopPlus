@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
@@ -38,6 +39,7 @@ public class ModifierProduitActivity extends AppCompatActivity {
     EditText edtTypeQuantite;
     EditText edtPrix;
 
+    CheckBox chkboxRabais;
     RatingBar ratingBar;
 
     Bitmap imageProduit;
@@ -212,6 +214,7 @@ public class ModifierProduitActivity extends AppCompatActivity {
         edtQuantite = (EditText) findViewById(R.id.activity_modifier_produit_edt_quantite);
         edtTypeQuantite = (EditText) findViewById(R.id.activity_modifier_produit_edt_type_quantite);
         edtPrix = (EditText) findViewById(R.id.activity_modifier_produit_edt_prix);
+        chkboxRabais = (CheckBox) findViewById(R.id.activity_modifier_produit_checkbox_en_rabais);
         ratingBar = (RatingBar) findViewById(R.id.activity_modifier_produit_rbar_qualite);
         ibtnProduit = (ImageButton) findViewById(R.id.activity_modifier_produit_ibtn_image_produit);
     }
@@ -224,6 +227,7 @@ public class ModifierProduitActivity extends AppCompatActivity {
         edtQuantite.setText(String.valueOf(produit.getQuantite()));
         edtTypeQuantite.setText(produit.getTypeQuantite());
         edtPrix.setText(String.valueOf(produit.getPrix()));
+        chkboxRabais.setChecked(produit.isEnRabais());
         ratingBar.setRating(produit.getQualite());
         ibtnProduit.setImageBitmap(imageProduit);
     }
@@ -283,6 +287,7 @@ public class ModifierProduitActivity extends AppCompatActivity {
         produitCree.setQuantite(Double.parseDouble(edtQuantite.getText().toString().trim()));
         produitCree.setTypeQuantite(edtTypeQuantite.getText().toString().trim());
         produitCree.setPrix(Double.parseDouble(edtPrix.getText().toString().trim()));
+        produitCree.setEnRabais(chkboxRabais.isChecked());
         produitCree.setQualite(ratingBar.getRating());
         produitCree.setImage(imageProduit);
 
