@@ -127,19 +127,19 @@ public class MagasinActivity extends AppCompatActivity {
                 break;
 
             case R.id.mnu_trier_prix_ascendant:
-                reinitialiserActivity(dbHelper.getListeProduitsMagasinPrixAscendant(idMag));
+                reinitialiserActivity(dbHelper.getListeProduitsMagasin(idMag, DbHelper.Tri.PrixAscendant));
                 break;
 
             case R.id.mnu_trier_prix_descendant:
-                reinitialiserActivity(dbHelper.getListeProduitsMagasinPrixDescendant(idMag));
+                reinitialiserActivity(dbHelper.getListeProduitsMagasin(idMag, DbHelper.Tri.PrixDescendant));
                 break;
 
             case R.id.mnu_trier_nom_ascendant:
-                reinitialiserActivity(dbHelper.getListeProduitsMagasinNomAscendant(idMag));
+                reinitialiserActivity(dbHelper.getListeProduitsMagasin(idMag, DbHelper.Tri.NomAscendant));
                 break;
 
             case R.id.mnu_trier_nom_descendant:
-                reinitialiserActivity(dbHelper.getListeProduitsMagasinNomDescendant(idMag));
+                reinitialiserActivity(dbHelper.getListeProduitsMagasin(idMag, DbHelper.Tri.NomDescendant));
                 break;
         }
         return true;
@@ -215,7 +215,7 @@ public class MagasinActivity extends AppCompatActivity {
      */
     private void reinitialiserActivity() {
         magasin = dbHelper.getMagasin(idMag);
-        listeProduits = dbHelper.getListeProduitsMagasinOrdreAjout(magasin.getId());
+        listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
 
         getSupportActionBar().setTitle(magasin.getNom() +
                 " - " + getResources().getString(R.string.app_name));

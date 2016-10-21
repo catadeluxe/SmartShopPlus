@@ -48,6 +48,19 @@ public class DbHelper extends SQLiteOpenHelper {
     private ArrayList<Magasin> listeMagasins = new ArrayList<Magasin>();
     private ArrayList<Produit> listeProduits = new ArrayList<Produit>();
 
+    public enum Tri {
+        PrixAscendant,
+        PrixDescendant,
+        NomAscendant,
+        NomDescendant,
+        Aucun
+    }
+
+    public enum Filtre {
+        EnRabais,
+        PasEnRabais,
+        Aucun
+    }
 
     public static DbHelper getInstance(Context context) {
         if (instanceDbHelper == null) {
@@ -329,7 +342,7 @@ public class DbHelper extends SQLiteOpenHelper {
      *
      * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
      */
-    public List<Produit> getListeProduitsMagasinOrdreAjout(long id_magasin) {
+    public List<Produit> getListeProduitsMagasin(long id_magasin) {
 
         List<Produit> listeProduits = new ArrayList<Produit>();
 
@@ -374,11 +387,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /**
      * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre.
-     * L'ordre est ascendant selon le prix
+     * L'ordre est ascendant le tri spécifié en paramètre
      *
      * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
      */
-    public List<Produit> getListeProduitsMagasinPrixAscendant(long id_magasin) {
+    public List<Produit> getListeProduitsMagasin(long id_magasin, Tri tri) {
 
         List<Produit> listeProduits = new ArrayList<Produit>();
 
@@ -398,8 +411,10 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUALITE,
                         PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
-                new String[]{String.valueOf(id_magasin)}, null, null,
-                PRODUIT_PRIX + " ASC");
+                new String[]{String.valueOf(id_magasin)},
+                null,
+                null,
+                getCommmandeTri(tri));
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -425,11 +440,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /**
      * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre.
-     * L'ordre est descendant selon le prix
+     * L'ordre est l'ordre d'ajouit dans la BD.
      *
      * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
      */
-    public List<Produit> getListeProduitsMagasinPrixDescendant(long id_magasin) {
+    public List<Produit> getListeProduitsMagasinFiltre(long id_magasin) {
 
         List<Produit> listeProduits = new ArrayList<Produit>();
 
@@ -449,8 +464,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUALITE,
                         PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
-                new String[]{String.valueOf(id_magasin)}, null, null,
-                PRODUIT_PRIX + " DESC");
+                new String[]{String.valueOf(id_magasin)}, null, null, null, null);
 
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -465,109 +479,6 @@ public class DbHelper extends SQLiteOpenHelper {
                             getBooleanFromInteger(cursor.getInt(6)),
                             cursor.getFloat(7),
                             DbBitmapUtility.getImage(cursor.getBlob(8)));
-
-                    listeProduits.add(produit);
-                } while (cursor.moveToNext());
-            }
-        }
-        cursor.close();
-        return listeProduits;
-    }
-
-    /**
-     * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre.
-     * L'ordre est ascendant selon le nom
-     *
-     * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
-     */
-    public List<Produit> getListeProduitsMagasinNomAscendant(long id_magasin) {
-
-        List<Produit> listeProduits = new ArrayList<Produit>();
-
-        SQLiteDatabase data = this.getReadableDatabase();
-
-        Produit produit;
-
-        Cursor cursor = data.query(NOM_TABLE_PRODUIT,
-                new String[]{
-                        PRODUIT_ID,
-                        PRODUIT_ID_MAGASIN_FK,
-                        PRODUIT_NOM,
-                        PRODUIT_QUANTITE,
-                        PRODUIT_TYPE_QUANTITE,
-                        PRODUIT_PRIX,
-                        PRODUIT_EN_RABAIS,
-                        PRODUIT_QUALITE,
-                        PRODUIT_IMAGE},
-                PRODUIT_ID_MAGASIN_FK + "=?",
-                new String[]{String.valueOf(id_magasin)}, null, null,
-                PRODUIT_NOM + " ASC");
-
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
-                    produit = new Produit(
-                            cursor.getLong(0),
-                            cursor.getLong(1),
-                            cursor.getString(2),
-                            cursor.getDouble(3),
-                            cursor.getString(4),
-                            cursor.getDouble(5),
-                            getBooleanFromInteger(cursor.getInt(6)),
-                            cursor.getFloat(7),
-                            DbBitmapUtility.getImage(cursor.getBlob(8)));
-
-                    listeProduits.add(produit);
-                } while (cursor.moveToNext());
-            }
-        }
-        cursor.close();
-        return listeProduits;
-    }
-
-    /**
-     * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre.
-     * L'ordre est descendant selon le nom
-     *
-     * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
-     */
-    public List<Produit> getListeProduitsMagasinNomDescendant(long id_magasin) {
-
-        List<Produit> listeProduits = new ArrayList<Produit>();
-
-        SQLiteDatabase data = this.getReadableDatabase();
-
-        Produit produit;
-
-        Cursor cursor = data.query(NOM_TABLE_PRODUIT,
-                new String[]{
-                        PRODUIT_ID,
-                        PRODUIT_ID_MAGASIN_FK,
-                        PRODUIT_NOM,
-                        PRODUIT_QUANTITE,
-                        PRODUIT_TYPE_QUANTITE,
-                        PRODUIT_PRIX,
-                        PRODUIT_EN_RABAIS,
-                        PRODUIT_QUALITE,
-                        PRODUIT_IMAGE},
-                PRODUIT_ID_MAGASIN_FK + "=?",
-                new String[]{String.valueOf(id_magasin)}, null, null,
-                PRODUIT_NOM + " DESC");
-
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
-                    produit = new Produit(
-                            cursor.getLong(0),
-                            cursor.getLong(1),
-                            cursor.getString(2),
-                            cursor.getDouble(3),
-                            cursor.getString(4),
-                            cursor.getDouble(5),
-                            getBooleanFromInteger(cursor.getInt(6)),
-                            cursor.getFloat(7),
-                            DbBitmapUtility.getImage(cursor.getBlob(8)));
-
                     listeProduits.add(produit);
                 } while (cursor.moveToNext());
             }
@@ -649,7 +560,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param idMag l'id du magasin dont les produits sont à supprimer
      */
     public void supprimerTousProduitsMagasin(long idMag) {
-        List<Produit> listeProduitsMagasin = getListeProduitsMagasinOrdreAjout(idMag);
+        List<Produit> listeProduitsMagasin = getListeProduitsMagasin(idMag);
 
         for (Produit produit : listeProduitsMagasin) {
             deleteProduit(produit);
@@ -665,6 +576,33 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     private boolean getBooleanFromInteger(int integer) {
         return integer != 0;
+    }
+
+    private String getCommmandeTri(Tri tri) {
+        String commande = "";
+
+        if (tri == Tri.PrixAscendant) {
+            commande = PRODUIT_PRIX + " ASC";
+        } else if (tri == Tri.PrixDescendant) {
+            commande = PRODUIT_PRIX + " DESC";
+        } else if (tri == Tri.NomAscendant) {
+            commande = PRODUIT_NOM + " ASC";
+        } else if (tri == Tri.NomDescendant) {
+            commande = PRODUIT_NOM + " DESC";
+        } else {
+            commande = null;
+        }
+
+        return commande;
+    }
+
+    private String getCommandeFiltre(Filtre filtre) {
+        String commande = "";
+
+        if (filtre != null) {
+
+        }
+        return commande;
     }
 
 }
