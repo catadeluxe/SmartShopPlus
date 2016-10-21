@@ -81,35 +81,6 @@ public class ModifierMagasinActivity extends AppCompatActivity {
     }
 
     /**
-     * Enregistre l'état de l'activity avat la rotation de l'écran.
-     *
-     * @param savedInstanceState
-     */
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the user's current game state
-        savedInstanceState.putByteArray(IMAGE_IBTN, DbBitmapUtility.getBytes(imageMagasin));
-
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    /**
-     * Rétablit l'état de l'activity après la rotation de l'écran pour qu'il corresponde à l'état
-     * que l'activity avait avant la rotation
-     *
-     * @param savedInstanceState
-     */
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
-        super.onRestoreInstanceState(savedInstanceState);
-
-        // Restore state members from saved instance
-        imageMagasin = DbBitmapUtility.getImage(savedInstanceState.getByteArray(IMAGE_IBTN));
-        iBtnImageMagasin.setImageBitmap(imageMagasin);
-    }
-
-    /**
      * When a result is returned from another Activity onActivityResult is called.
      * <p>
      * doc https://developer.android.com/reference/android/app/Activity.html#onActivityResult(int,%20int,%20android.content.Intent)
@@ -198,12 +169,43 @@ public class ModifierMagasinActivity extends AppCompatActivity {
 
 
     /**
+     * Enregistre l'état de l'activity avat la rotation de l'écran.
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putByteArray(IMAGE_IBTN, DbBitmapUtility.getBytes(imageMagasin));
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    /**
+     * Rétablit l'état de l'activity après la rotation de l'écran pour qu'il corresponde à l'état
+     * que l'activity avait avant la rotation
+     *
+     * @param savedInstanceState
+     */
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        imageMagasin = DbBitmapUtility.getImage(savedInstanceState.getByteArray(IMAGE_IBTN));
+        iBtnImageMagasin.setImageBitmap(imageMagasin);
+    }
+
+
+    /**
      * Assigne les Views de la vue (fichier XML) aux variables d'instance
      */
 
     private void assignerVariablesAuxViews() {
         edtNomMagasin = (EditText) findViewById(R.id.activity_modifier_magasin_edt_nom_magasin);
-        iBtnImageMagasin = (ImageButton) findViewById(R.id.activity_modifier_magasin_ibtn_image_magasin);
+        iBtnImageMagasin = (ImageButton)
+                findViewById(R.id.activity_modifier_magasin_ibtn_image_magasin);
     }
 
     /**
@@ -250,6 +252,4 @@ public class ModifierMagasinActivity extends AppCompatActivity {
 
         return magasinCree;
     }
-
-
 }

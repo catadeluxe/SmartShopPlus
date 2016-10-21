@@ -54,6 +54,8 @@
     <string name="mnu_sort_name_descending">Sort by name descendingly</string>
     <string name="mnu_sort_price_ascending">Sort by price ascendingly</string>
     <string name="mnu_sort_price_descending">Sort by price descendingly</string>
+    <string name="mnu_contact_developer">Contact developer</string>
+
 
 
     <string name="err_field_cannot_be_blank">This field cannot be blank</string>

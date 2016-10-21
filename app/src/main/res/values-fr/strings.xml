@@ -56,6 +56,8 @@
     <string name="mnu_sort_name_descending">Trier par nom descendant</string>
     <string name="mnu_sort_price_ascending">Trier par prix ascendant</string>
     <string name="mnu_sort_price_descending">Trier par prix descendant</string>
+    <string name="mnu_contact_developer">Contacter développeur</string>
+
 
 
     <string name="err_field_cannot_be_blank">Ce champ ne peut être vide</string>

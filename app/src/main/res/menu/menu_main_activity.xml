@@ -9,5 +9,12 @@
         android:title="@string/mnu_add"
         app:showAsAction="ifRoom|withText" />
 
+    <item
+        android:id="@+id/mnu_contact_developer"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:orderInCategory="75"
+        android:title="@string/mnu_contact_developer"
+        app:showAsAction="ifRoom|withText" />
+
 
 </menu>
