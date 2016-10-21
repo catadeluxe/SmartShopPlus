@@ -17,12 +17,14 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import ca.qc.bdeb.p55.smartshopplus.R;
+import ca.qc.bdeb.p55.smartshopplus.bd.DbBitmapUtility;
 import ca.qc.bdeb.p55.smartshopplus.bd.DbHelper;
 import ca.qc.bdeb.p55.smartshopplus.modele.Magasin;
 
 public class AjouterMagasinActivity extends AppCompatActivity {
 
     public final static int IMAGE_PICK = 10;
+    private final static String IMAGE_IBTN = "ImageIbtm";
 
     DbHelper dbHelper;
 
@@ -156,6 +158,35 @@ public class AjouterMagasinActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    /**
+     * Enregistre l'état de l'activity avat la rotation de l'écran.
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putByteArray(IMAGE_IBTN, DbBitmapUtility.getBytes(imageMagasin));
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    /**
+     * Rétablit l'état de l'activity après la rotation de l'écran pour qu'il corresponde à l'état
+     * que l'activity avait avant la rotation
+     *
+     * @param savedInstanceState
+     */
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        imageMagasin = DbBitmapUtility.getImage(savedInstanceState.getByteArray(IMAGE_IBTN));
+        iBtnImageMagasin.setImageBitmap(imageMagasin);
     }
 
     /**

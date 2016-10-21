@@ -72,7 +72,7 @@ public class MagasinActivity extends AppCompatActivity {
                 Produit prodClique = (Produit) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getBaseContext(), ModifierProduitActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, prodClique.getId());
-                ModifierProduitActivity.persistence = null;
+             //   ModifierProduitActivity.persistence = null;
                 startActivity(intent);
             }
         });

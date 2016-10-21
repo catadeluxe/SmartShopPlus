@@ -2,7 +2,6 @@ package ca.qc.bdeb.p55.smartshopplus.vue;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -19,12 +18,14 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import ca.qc.bdeb.p55.smartshopplus.R;
+import ca.qc.bdeb.p55.smartshopplus.bd.DbBitmapUtility;
 import ca.qc.bdeb.p55.smartshopplus.bd.DbHelper;
 import ca.qc.bdeb.p55.smartshopplus.modele.Produit;
 
 public class ModifierProduitActivity extends AppCompatActivity {
 
     public final static int IMAGE_PICK = 9;
+    private final static String IMAGE_IBTN = "ImageIbtn";
 
     Long idProduit;
     Produit produit;
@@ -42,8 +43,6 @@ public class ModifierProduitActivity extends AppCompatActivity {
     Bitmap imageProduit;
     ImageButton ibtnProduit;
 
-    public static Persistence persistence;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +57,7 @@ public class ModifierProduitActivity extends AppCompatActivity {
         // assigne les variables d'instance aux Views qui se retrouvent dans la vue
         assignerVariablesAuxViews();
 
-
-        if (persistence == null) {
-            persistence = new Persistence();
-            persistence.setImageProduitPersistence(produit.getImage());
-        }
+        imageProduit = produit.getImage();
 
         peuplerViewsAvecDonneesProduit();
         getSupportActionBar().setTitle(produit.getNom() + " - " + getResources().getString(R.string.app_name));
@@ -130,13 +125,10 @@ public class ModifierProduitActivity extends AppCompatActivity {
 
                         BitmapFactory.Options options = new BitmapFactory.Options();
                         options.inSampleSize = 4;
-                        persistence.setImageProduitPersistence(
-                                BitmapFactory.decodeStream(inputStream, null, options));
+                        imageProduit = BitmapFactory.decodeStream(inputStream, null, options);
 
-                        this.produit.setImage(
-                                persistence.getImageProduitPersistence());
-                        this.ibtnProduit.setImageBitmap(
-                                persistence.getImageProduitPersistence());
+                        this.ibtnProduit.setImageBitmap(imageProduit);
+
 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -169,7 +161,8 @@ public class ModifierProduitActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.mnu_valider:
                 if (verifierTousChampsBienRemplis()) {
-                    boolean isUpdatedSuccessfully = dbHelper.updateProduit(creerProduitAvecDonneesView());
+                    boolean isUpdatedSuccessfully =
+                            dbHelper.updateProduit(creerProduitAvecDonneesView());
                     if (isUpdatedSuccessfully) {
                         Toast.makeText(ModifierProduitActivity.this,
                                 getResources().getString(R.string.toast_changes_applied),
@@ -177,29 +170,38 @@ public class ModifierProduitActivity extends AppCompatActivity {
                         finish();
                     }
                 }
-
                 break;
         }
         return true;
     }
 
-
+    /**
+     * Enregistre l'état de l'activity avat la rotation de l'écran.
+     *
+     * @param savedInstanceState
+     */
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        persistence.setImageProduitPersistence(imageProduit);
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putByteArray(IMAGE_IBTN, DbBitmapUtility.getBytes(imageProduit));
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     /**
-     * S'active si on revient d'un changement d'orientation
+     * Rétablit l'état de l'activity après la rotation de l'écran pour qu'il corresponde à l'état
+     * que l'activity avait avant la rotation
      *
-     * @param newConfig
+     * @param savedInstanceState
      */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
 
-        imageProduit = persistence.getImageProduitPersistence();
+        // Restore state members from saved instance
+        imageProduit = DbBitmapUtility.getImage(savedInstanceState.getByteArray(IMAGE_IBTN));
+        ibtnProduit.setImageBitmap(imageProduit);
     }
 
     /**
@@ -285,27 +287,5 @@ public class ModifierProduitActivity extends AppCompatActivity {
         produitCree.setImage(imageProduit);
 
         return produitCree;
-    }
-
-    /**
-     * Persistence pour garder la même nouvelle image choisie
-     */
-    class Persistence {
-        private Bitmap imageProduitPersistence;
-
-        /**
-         * Constructeur par défaut sans paramètres
-         */
-        public Persistence() {
-        }
-
-
-        public Bitmap getImageProduitPersistence() {
-            return imageProduitPersistence;
-        }
-
-        public void setImageProduitPersistence(Bitmap imageProduitPersistence) {
-            this.imageProduitPersistence = imageProduitPersistence;
-        }
     }
 }
