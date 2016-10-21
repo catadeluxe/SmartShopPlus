@@ -84,7 +84,11 @@ public class DbHelper extends SQLiteOpenHelper {
         listeMagasins.add(new Magasin("Bombardier", imageMagasin));
 
         // Ajout produits par défaut
-        listeProduits.add(new Produit(1, "Coca-Cola", 2000, "ml", 1.99, false, 5f, imageProduit));
+        listeProduits.add(new Produit(1, "Coca-Cola", 2000, "ml", 1.99, false, 2f, imageProduit));
+        listeProduits.add(new Produit(1, "Cola Sélection", 2000, "ml", 0.99, false, 1.8f, imageProduit));
+        listeProduits.add(new Produit(3, "Croissants Kirkland Signature", 24, "croissants", 8.99,
+                false, 4.3f, imageProduit));
+        listeProduits.add(new Produit(8, "CSeries 300", 1, "avion(s)", 71000000, false, 4.5f, imageProduit));
 
 
         // Création Strings commandes SQL à exécuter
@@ -104,7 +108,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE + " REAL," +
                         PRODUIT_TYPE_QUANTITE + " TEXT," +
                         PRODUIT_PRIX + " REAL," +
-                        PRODUIT_EN_RABAIS + " INTEGER" +
+                        PRODUIT_EN_RABAIS + " INTEGER," +
                         PRODUIT_QUALITE + " REAL," +
                         PRODUIT_IMAGE + " BLOB," +
                         "FOREIGN KEY (" + PRODUIT_ID_MAGASIN_FK +

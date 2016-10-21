@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 
 import ca.qc.bdeb.p55.smartshopplus.R;
 
@@ -123,7 +125,7 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
         }
 
         holder.txtNom.setText(rowItem.getNom());
-        holder.txtQuantite.setText(rowItem.getQuantite() + " " + rowItem.getTypeQuantite());
+        holder.txtQuantite.setText(getQuantiteString(rowItem));
         holder.txtPrix.setText(getPrixString(rowItem));
         holder.txtPrixUnitaire.setText(getPrixUnitaireString(rowItem));
         holder.txtQualite.setText(getQualiteString(rowItem));
@@ -134,6 +136,33 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
 
     public ProduitHolder getHolder() {
         return holder;
+    }
+
+
+    /**
+     * Prend un produit en paramètre et retourne la quantité de ce produit en la formattant
+     * pour qu'elle affiche jusqu'à cinq décimales de précision si et seulement si c'est nécessaire
+     * 2. Espace
+     * 3. Le type de quantité
+     *
+     * @param produit le produit dont le prix est à convertir en String
+     * @return le String de prix qui a été converti selon le frmat expliqué précédemment
+     */
+    private String getQuantiteString(Produit produit) {
+        String quantiteString = "";
+
+        // Arrondit à 5 décimales de précision.
+        // Affiche les premières décimales seulement si elles ne valent pas zéro
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.CANADA);
+        otherSymbols.setDecimalSeparator(',');
+        otherSymbols.setGroupingSeparator(' ');
+        DecimalFormat df = new DecimalFormat("0.#####", otherSymbols);
+        df.setGroupingUsed(true);
+        df.setRoundingMode(RoundingMode.CEILING);
+        quantiteString = df.format(produit.getQuantite());
+
+        quantiteString = quantiteString + " " + produit.getTypeQuantite();
+        return quantiteString;
     }
 
     /**
@@ -153,21 +182,25 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
     private String getPrixUnitaireString(Produit produit) {
         String prixUnitaireArrondi = "";
 
-        // Arrondit à 5 décimales de précision
-        DecimalFormat df = new DecimalFormat("#.#####");
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.CANADA);
+        otherSymbols.setDecimalSeparator(',');
+        otherSymbols.setGroupingSeparator(' ');
+        DecimalFormat df = new DecimalFormat("0.#####", otherSymbols);
+        df.setGroupingUsed(true);
         df.setRoundingMode(RoundingMode.CEILING);
 
-        prixUnitaireArrondi = String.valueOf(df.format(produit.getPrix() / produit.getQuantite()
-                * Produit.MULTIPLICATEUR_PRIX_UNITAIRE) + " " + SYMBOLE_MONNAIE_UTILISEE +
+        prixUnitaireArrondi = String.valueOf(formatterPrixString(produit.getPrix() /
+                produit.getQuantite() * Produit.MULTIPLICATEUR_PRIX_UNITAIRE) +
+                " " + SYMBOLE_MONNAIE_UTILISEE +
                 SYMBOLE_SEPARATEUR_MONNAIE_SUR_MULTIPLICATEUR_PRIX_UNITAIRE +
-                Produit.MULTIPLICATEUR_PRIX_UNITAIRE + " " + produit.getTypeQuantite());
+                df.format(Produit.MULTIPLICATEUR_PRIX_UNITAIRE) + " " + produit.getTypeQuantite());
 
         return prixUnitaireArrondi;
     }
 
     /**
      * Prend un produit en paramètre et retourne le prix de ce produit selon le format suivant:
-     * 1. Le prix du produit à 5 décimales de précision
+     * 1. Le prix du produit à 5 décimales de précision (dont 2 sont toujours affichées)
      * 2. Espace
      * 3. Le symbole de la monnaie utilisée
      *
@@ -175,23 +208,32 @@ public class ArrayAdapterProduits extends ArrayAdapter<Produit> {
      * @return le String de prix qui a été converti selon le frmat expliqué précédemment
      */
     private String getPrixString(Produit produit) {
-        String prixString = "";
-
-        DecimalFormat df;
-        if (produit.getPrix() % 1.0D != 0) {
-            // Arrondit à 5 décimales de précision.
-            // Affiche les deux premières décimales même si elles valent zéro
-            df = new DecimalFormat("0.00###");
-            df.setRoundingMode(RoundingMode.CEILING);
-            prixString = df.format(produit.getPrix());
-        } else {
-            df = new DecimalFormat("#.00");
-            df.setRoundingMode(RoundingMode.CEILING);
-            prixString = df.format(produit.getPrix());
-        }
+        String prixString = formatterPrixString(produit.getPrix());
 
         prixString = String.valueOf(prixString + " " + SYMBOLE_MONNAIE_UTILISEE);
         return prixString;
+    }
+
+    /**
+     * Formatte un prix reçu par paramètre
+     *
+     * @param prix le prox reçu
+     * @return le prix formatté
+     */
+    private String formatterPrixString(double prix) {
+        String prixFormatte = "";
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.CANADA);
+        otherSymbols.setDecimalSeparator(',');
+        otherSymbols.setGroupingSeparator(' ');
+
+        // Arrondit à 5 décimales de précision dont 2 toujours affichées
+        DecimalFormat df = new DecimalFormat("0.00###", otherSymbols);
+        df.setGroupingUsed(true);
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        prixFormatte = df.format(prix);
+        return prixFormatte;
     }
 
     /**
