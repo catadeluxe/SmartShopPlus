@@ -72,7 +72,7 @@ public class MagasinActivity extends AppCompatActivity {
                 Produit prodClique = (Produit) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getBaseContext(), ModifierProduitActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, prodClique.getId());
-             //   ModifierProduitActivity.persistence = null;
+                //   ModifierProduitActivity.persistence = null;
                 startActivity(intent);
             }
         });
@@ -125,6 +125,22 @@ public class MagasinActivity extends AppCompatActivity {
                 break;
             case R.id.mnu_supprimer_tous_produits:
                 afficherFenetreSuppressionTousProduits();
+                break;
+
+            case R.id.mnu_trier_prix_ascendant:
+                reinitialiserActivity(dbHelper.getListeProduitsMagasinPrixAscendant(idMag));
+                break;
+
+            case R.id.mnu_trier_prix_descendant:
+                reinitialiserActivity(dbHelper.getListeProduitsMagasinPrixDescendant(idMag));
+                break;
+
+            case R.id.mnu_trier_nom_ascendant:
+                reinitialiserActivity(dbHelper.getListeProduitsMagasinNomAscendant(idMag));
+                break;
+
+            case R.id.mnu_trier_nom_descendant:
+                reinitialiserActivity(dbHelper.getListeProduitsMagasinNomDescendant(idMag));
                 break;
         }
         return true;
@@ -201,6 +217,23 @@ public class MagasinActivity extends AppCompatActivity {
     private void reinitialiserActivity() {
         magasin = dbHelper.getMagasin(idMag);
         listeProduits = dbHelper.getListeProduitsMagasinOrdreAjout(magasin.getId());
+
+        getSupportActionBar().setTitle(magasin.getNom() +
+                " - " + getResources().getString(R.string.app_name));
+
+        arrayAdapterProduits = new ArrayAdapterProduits(this,
+                R.layout.relative_layout_liste_produits, listeProduits);
+
+        lvwProduits.setAdapter(arrayAdapterProduits);
+    }
+
+    /**
+     * Réinitialise les views dans l'activity avec la liste des produits reçue en paramètre.
+     * But: Que la vue corresponde aux données dans la base de données
+     */
+    private void reinitialiserActivity(List<Produit> liste) {
+        magasin = dbHelper.getMagasin(idMag);
+        listeProduits = liste;
 
         getSupportActionBar().setTitle(magasin.getNom() +
                 " - " + getResources().getString(R.string.app_name));
