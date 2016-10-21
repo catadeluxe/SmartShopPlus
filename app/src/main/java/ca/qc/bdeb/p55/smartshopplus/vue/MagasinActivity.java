@@ -88,7 +88,6 @@ public class MagasinActivity extends AppCompatActivity {
         reinitialiserActivity();
     }
 
-
     /**
      * Affiche et gonfle la barre de menu
      *
