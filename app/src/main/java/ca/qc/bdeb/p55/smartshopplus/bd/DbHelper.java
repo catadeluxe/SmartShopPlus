@@ -310,11 +310,12 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre
+     * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre.
+     * L'ordre est l'ordre d'ajouit dans la BD.
      *
      * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
      */
-    public List<Produit> getListeProduitsMagasin(long id_magasin) {
+    public List<Produit> getListeProduitsMagasinOrdreAjout(long id_magasin) {
 
         List<Produit> listeProduits = new ArrayList<Produit>();
 
@@ -355,6 +356,203 @@ public class DbHelper extends SQLiteOpenHelper {
         cursor.close();
         return listeProduits;
     }
+
+    /**
+     * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre.
+     * L'ordre est ascendant selon le prix
+     *
+     * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
+     */
+    public List<Produit> getListeProduitsMagasinPrixAscendant(long id_magasin) {
+
+        List<Produit> listeProduits = new ArrayList<Produit>();
+
+        SQLiteDatabase data = this.getReadableDatabase();
+
+        Produit produit;
+
+        Cursor cursor = data.query(NOM_TABLE_PRODUIT,
+                new String[]{
+                        PRODUIT_ID,
+                        PRODUIT_ID_MAGASIN_FK,
+                        PRODUIT_NOM,
+                        PRODUIT_QUANTITE,
+                        PRODUIT_TYPE_QUANTITE,
+                        PRODUIT_PRIX,
+                        PRODUIT_QUALITE,
+                        PRODUIT_IMAGE},
+                PRODUIT_ID_MAGASIN_FK + "=?",
+                new String[]{String.valueOf(id_magasin)}, null, null,
+                PRODUIT_PRIX + " ASC");
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    produit = new Produit(
+                            cursor.getLong(0),
+                            cursor.getLong(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getDouble(5),
+                            cursor.getFloat(6),
+                            DbBitmapUtility.getImage(cursor.getBlob(7)));
+
+                    listeProduits.add(produit);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        return listeProduits;
+    }
+
+    /**
+     * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre.
+     * L'ordre est descendant selon le prix
+     *
+     * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
+     */
+    public List<Produit> getListeProduitsMagasinPrixDescendant(long id_magasin) {
+
+        List<Produit> listeProduits = new ArrayList<Produit>();
+
+        SQLiteDatabase data = this.getReadableDatabase();
+
+        Produit produit;
+
+        Cursor cursor = data.query(NOM_TABLE_PRODUIT,
+                new String[]{
+                        PRODUIT_ID,
+                        PRODUIT_ID_MAGASIN_FK,
+                        PRODUIT_NOM,
+                        PRODUIT_QUANTITE,
+                        PRODUIT_TYPE_QUANTITE,
+                        PRODUIT_PRIX,
+                        PRODUIT_QUALITE,
+                        PRODUIT_IMAGE},
+                PRODUIT_ID_MAGASIN_FK + "=?",
+                new String[]{String.valueOf(id_magasin)}, null, null,
+                PRODUIT_PRIX + " DESC");
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    produit = new Produit(
+                            cursor.getLong(0),
+                            cursor.getLong(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getDouble(5),
+                            cursor.getFloat(6),
+                            DbBitmapUtility.getImage(cursor.getBlob(7)));
+
+                    listeProduits.add(produit);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        return listeProduits;
+    }
+
+    /**
+     * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre.
+     * L'ordre est ascendant selon le nom
+     *
+     * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
+     */
+    public List<Produit> getListeProduitsMagasinNomAscendant(long id_magasin) {
+
+        List<Produit> listeProduits = new ArrayList<Produit>();
+
+        SQLiteDatabase data = this.getReadableDatabase();
+
+        Produit produit;
+
+        Cursor cursor = data.query(NOM_TABLE_PRODUIT,
+                new String[]{
+                        PRODUIT_ID,
+                        PRODUIT_ID_MAGASIN_FK,
+                        PRODUIT_NOM,
+                        PRODUIT_QUANTITE,
+                        PRODUIT_TYPE_QUANTITE,
+                        PRODUIT_PRIX,
+                        PRODUIT_QUALITE,
+                        PRODUIT_IMAGE},
+                PRODUIT_ID_MAGASIN_FK + "=?",
+                new String[]{String.valueOf(id_magasin)}, null, null,
+                PRODUIT_NOM + " ASC");
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    produit = new Produit(
+                            cursor.getLong(0),
+                            cursor.getLong(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getDouble(5),
+                            cursor.getFloat(6),
+                            DbBitmapUtility.getImage(cursor.getBlob(7)));
+
+                    listeProduits.add(produit);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        return listeProduits;
+    }
+
+    /**
+     * Retourne la liste de tous les produits du magasin dont l'id a été passé en paramètre.
+     * L'ordre est descendant selon le nom
+     *
+     * @return la liste de tous les produits du magasin dont l'id a été passé en paramètre
+     */
+    public List<Produit> getListeProduitsMagasinNomDescendant(long id_magasin) {
+
+        List<Produit> listeProduits = new ArrayList<Produit>();
+
+        SQLiteDatabase data = this.getReadableDatabase();
+
+        Produit produit;
+
+        Cursor cursor = data.query(NOM_TABLE_PRODUIT,
+                new String[]{
+                        PRODUIT_ID,
+                        PRODUIT_ID_MAGASIN_FK,
+                        PRODUIT_NOM,
+                        PRODUIT_QUANTITE,
+                        PRODUIT_TYPE_QUANTITE,
+                        PRODUIT_PRIX,
+                        PRODUIT_QUALITE,
+                        PRODUIT_IMAGE},
+                PRODUIT_ID_MAGASIN_FK + "=?",
+                new String[]{String.valueOf(id_magasin)}, null, null,
+                PRODUIT_NOM + " DESC");
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    produit = new Produit(
+                            cursor.getLong(0),
+                            cursor.getLong(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getDouble(5),
+                            cursor.getFloat(6),
+                            DbBitmapUtility.getImage(cursor.getBlob(7)));
+
+                    listeProduits.add(produit);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        return listeProduits;
+    }
+
 
     /**
      * Supprime un produit de la base de données
@@ -426,7 +624,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param idMag l'id du magasin dont les produits sont à supprimer
      */
     public void supprimerTousProduitsMagasin(long idMag) {
-        List<Produit> listeProduitsMagasin = getListeProduitsMagasin(idMag);
+        List<Produit> listeProduitsMagasin = getListeProduitsMagasinOrdreAjout(idMag);
 
         for (Produit produit : listeProduitsMagasin) {
             deleteProduit(produit);

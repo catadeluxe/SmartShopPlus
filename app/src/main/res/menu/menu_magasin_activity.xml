@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_edit_white_24dp"
         android:orderInCategory="75"
         android:title="@string/mnu_edit"
-        app:showAsAction="ifRoom|withText"></item>
+        app:showAsAction="ifRoom|withText"/>
     <item
         android:id="@+id/mnu_supprimer"
         android:icon="@drawable/ic_delete_forever_white_24dp"
@@ -26,5 +26,33 @@
         android:icon="@drawable/ic_delete_sweep_white_48dp"
         android:orderInCategory="75"
         android:title="@string/mnu_remove_all_products"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/mnu_trier_prix_ascendant"
+        android:icon="@drawable/ic_sort_by_alpha_white_48dp"
+        android:orderInCategory="75"
+        android:title="@string/mnu_sort_price_ascending"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/mnu_trier_prix_descendant"
+        android:icon="@drawable/ic_sort_by_alpha_white_48dp"
+        android:orderInCategory="75"
+        android:title="@string/mnu_sort_price_descending"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/mnu_trier_nom_ascendant"
+        android:icon="@drawable/ic_sort_by_alpha_white_48dp"
+        android:orderInCategory="75"
+        android:title="@string/mnu_sort_name_ascending"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/mnu_trier_nom_descendant"
+        android:icon="@drawable/ic_sort_by_alpha_white_48dp"
+        android:orderInCategory="75"
+        android:title="@string/mnu_sort_name_descending"
         app:showAsAction="never" />
 </menu>

@@ -72,6 +72,7 @@ public class MagasinActivity extends AppCompatActivity {
                 Produit prodClique = (Produit) parent.getItemAtPosition(position);
                 Intent intent = new Intent(getBaseContext(), ModifierProduitActivity.class);
                 intent.putExtra(EXTRA_MESSAGE, prodClique.getId());
+                ModifierProduitActivity.persistence = null;
                 startActivity(intent);
             }
         });
@@ -199,7 +200,7 @@ public class MagasinActivity extends AppCompatActivity {
      */
     private void reinitialiserActivity() {
         magasin = dbHelper.getMagasin(idMag);
-        listeProduits = dbHelper.getListeProduitsMagasin(magasin.getId());
+        listeProduits = dbHelper.getListeProduitsMagasinOrdreAjout(magasin.getId());
 
         getSupportActionBar().setTitle(magasin.getNom() +
                 " - " + getResources().getString(R.string.app_name));

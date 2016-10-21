@@ -35,6 +35,7 @@ public class ModifierMagasinActivity extends AppCompatActivity {
     ImageButton iBtnImageMagasin;
 
     Bitmap imageMagasin;
+    private static Bitmap bmpTmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,9 @@ public class ModifierMagasinActivity extends AppCompatActivity {
         // assigne les variables d'instance aux Views qui se retrouvent dans la vue
         assignerVariablesAuxViews();
 
+        if (bmpTmp != null) {
+            magasin.setImage(bmpTmp);
+        }
         imageMagasin = magasin.getImage();
         peuplerViewsAvecDonneesProduit();
 
@@ -81,16 +85,16 @@ public class ModifierMagasinActivity extends AppCompatActivity {
 
     /**
      * When a result is returned from another Activity onActivityResult is called.
-     *
+     * <p>
      * doc https://developer.android.com/reference/android/app/Activity.html#onActivityResult(int,%20int,%20android.content.Intent)
-     *
+     * <p>
      * Called when an activity you launched exits, giving you the requestCode you started it with,
      * the resultCode it returned, and any additional data from it. The resultCode will be
      * RESULT_CANCELED if the activity explicitly returned that, didn't return any result, or
      * crashed during its operation.
-     *
+     * <p>
      * You will receive this call immediately before onResume() when your activity is re-starting.
-     *
+     * <p>
      * This method is never invoked if your activity sets noHistory to true.
      *
      * @param requestCode int: The integer request code originally supplied to
@@ -130,6 +134,12 @@ public class ModifierMagasinActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        bmpTmp = imageMagasin;
     }
 
     /**

@@ -2,6 +2,7 @@ package ca.qc.bdeb.p55.smartshopplus.vue;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class ModifierProduitActivity extends AppCompatActivity {
     Bitmap imageProduit;
     ImageButton ibtnProduit;
 
+    public static Persistence persistence;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +58,12 @@ public class ModifierProduitActivity extends AppCompatActivity {
         // assigne les variables d'instance aux Views qui se retrouvent dans la vue
         assignerVariablesAuxViews();
 
-        imageProduit = produit.getImage();
+
+        if (persistence == null) {
+            persistence = new Persistence();
+            persistence.setImageProduitPersistence(produit.getImage());
+        }
+
         peuplerViewsAvecDonneesProduit();
         getSupportActionBar().setTitle(produit.getNom() + " - " + getResources().getString(R.string.app_name));
 
@@ -122,10 +130,13 @@ public class ModifierProduitActivity extends AppCompatActivity {
 
                         BitmapFactory.Options options = new BitmapFactory.Options();
                         options.inSampleSize = 4;
-                        imageProduit = BitmapFactory.decodeStream(inputStream, null, options);
+                        persistence.setImageProduitPersistence(
+                                BitmapFactory.decodeStream(inputStream, null, options));
 
-                        this.produit.setImage(imageProduit);
-                        this.ibtnProduit.setImageBitmap(imageProduit);
+                        this.produit.setImage(
+                                persistence.getImageProduitPersistence());
+                        this.ibtnProduit.setImageBitmap(
+                                persistence.getImageProduitPersistence());
 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -172,6 +183,25 @@ public class ModifierProduitActivity extends AppCompatActivity {
         return true;
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        persistence.setImageProduitPersistence(imageProduit);
+    }
+
+    /**
+     * S'active si on revient d'un changement d'orientation
+     *
+     * @param newConfig
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        imageProduit = persistence.getImageProduitPersistence();
+    }
+
     /**
      * Assigne les Views de la vue (fichier XML) aux variables d'instance
      */
@@ -193,7 +223,7 @@ public class ModifierProduitActivity extends AppCompatActivity {
         edtTypeQuantite.setText(produit.getTypeQuantite());
         edtPrix.setText(String.valueOf(produit.getPrix()));
         ratingBar.setRating(produit.getQualite());
-        ibtnProduit.setImageBitmap(produit.getImage());
+        ibtnProduit.setImageBitmap(imageProduit);
     }
 
     /**
@@ -255,5 +285,27 @@ public class ModifierProduitActivity extends AppCompatActivity {
         produitCree.setImage(imageProduit);
 
         return produitCree;
+    }
+
+    /**
+     * Persistence pour garder la même nouvelle image choisie
+     */
+    class Persistence {
+        private Bitmap imageProduitPersistence;
+
+        /**
+         * Constructeur par défaut sans paramètres
+         */
+        public Persistence() {
+        }
+
+
+        public Bitmap getImageProduitPersistence() {
+            return imageProduitPersistence;
+        }
+
+        public void setImageProduitPersistence(Bitmap imageProduitPersistence) {
+            this.imageProduitPersistence = imageProduitPersistence;
+        }
     }
 }

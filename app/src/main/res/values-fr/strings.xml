@@ -52,6 +52,12 @@
     <string name="mnu_remove_all_products">Supprimer tous les produits</string>
 
 
+    <string name="mnu_sort_name_ascending">Trier par nom ascendant</string>
+    <string name="mnu_sort_name_descending">Trier par nom descendant</string>
+    <string name="mnu_sort_price_ascending">Trier par prix ascendant</string>
+    <string name="mnu_sort_price_descending">Trier par prix descendant</string>
+
+
     <string name="err_field_cannot_be_blank">Ce champ ne peut être vide</string>
 
 

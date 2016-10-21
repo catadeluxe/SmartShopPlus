@@ -24,8 +24,6 @@
     <string name="lbl_quality">Quality :</string>
 
 
-
-
     <string name="desc_store_name">Store name</string>
     <string name="hint_store_name">Insert store name</string>
     <string name="desc_store_image">Image</string>
@@ -52,7 +50,10 @@
     <string name="mnu_apply">Apply</string>
     <string name="mnu_remove_all_products">Remove all products</string>
 
-
+    <string name="mnu_sort_name_ascending">Sort by name ascendingly</string>
+    <string name="mnu_sort_name_descending">Sort by name descendingly</string>
+    <string name="mnu_sort_price_ascending">Sort by price ascendingly</string>
+    <string name="mnu_sort_price_descending">Sort by price descendingly</string>
 
 
     <string name="err_field_cannot_be_blank">This field cannot be blank</string>

@@ -54,6 +54,12 @@
     <string name="mnu_remove_all_products">Ștergere toate produsele</string>
 
 
+    <string name="mnu_sort_name_ascending">Sortare nume ascendent</string>
+    <string name="mnu_sort_name_descending">Sortare nume descendent</string>
+    <string name="mnu_sort_price_ascending">Sortare preț ascendent</string>
+    <string name="mnu_sort_price_descending">Sortare preț descendent</string>
+
+
     <string name="err_field_cannot_be_blank">Acest câmp nu poate fi lăsat gol</string>
 
 
