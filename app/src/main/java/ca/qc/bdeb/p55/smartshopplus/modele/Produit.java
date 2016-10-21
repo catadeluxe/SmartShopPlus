@@ -16,6 +16,7 @@ public class Produit {
     private double quantite;
     private String typeQuantite;
     private double prix;
+    private boolean enRabais;
     private float qualite;
     private Bitmap image;
 
@@ -33,17 +34,19 @@ public class Produit {
      * @param nom          le nom du produit
      * @param quantite     la quantité de produit
      * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
-     * @param prix         le txtPrix du produit
+     * @param prix         le prix du produit
+     * @param enRabais     si l'item est en rabais
      * @param qualite      la qualité du produit
-     * @param image        l'ivwImageProduit du produit
+     * @param image        l'image du produit
      */
     public Produit(long idMagasinFk, String nom, double quantite, String typeQuantite, double prix,
-                   float qualite, Bitmap image) {
+                   boolean enRabais, float qualite, Bitmap image) {
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
         this.quantite = quantite;
         this.typeQuantite = typeQuantite;
         this.prix = prix;
+        this.enRabais = enRabais;
         this.qualite = qualite;
         this.image = image;
 
@@ -57,18 +60,20 @@ public class Produit {
      * @param nom          le nom du produit
      * @param quantite     la quantité de produit
      * @param typeQuantite le type de quantité (ex. l, ml, g, unités etc.)
-     * @param prix         le txtPrix du produit
+     * @param prix         le prix du produit
+     * @param enRabais     si l'item est en rabais
      * @param qualite      la qualité du produit
-     * @param image        l'ivwImageProduit du produit
+     * @param image        l'image du produit
      */
     public Produit(long id, long idMagasinFk, String nom, double quantite, String typeQuantite,
-                   double prix, float qualite, Bitmap image) {
+                   double prix, boolean enRabais, float qualite, Bitmap image) {
         this.id = id;
         this.idMagasinFk = idMagasinFk;
         this.nom = nom;
         this.quantite = quantite;
         this.typeQuantite = typeQuantite;
         this.prix = prix;
+        this.enRabais = enRabais;
         this.qualite = qualite;
         this.image = image;
     }
@@ -119,6 +124,14 @@ public class Produit {
 
     public void setPrix(double prix) {
         this.prix = prix;
+    }
+
+    public boolean isEnRabais() {
+        return enRabais;
+    }
+
+    public void setEnRabais(boolean enRabais) {
+        this.enRabais = enRabais;
     }
 
     public float getQualite() {

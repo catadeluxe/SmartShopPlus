@@ -11,10 +11,8 @@
 
     <item
         android:id="@+id/mnu_contact_developer"
-        android:icon="@drawable/ic_add_white_24dp"
+        android:icon="@drawable/ic_email_white_48dp"
         android:orderInCategory="75"
         android:title="@string/mnu_contact_developer"
-        app:showAsAction="ifRoom|withText" />
-
-
+        app:showAsAction="never" />
 </menu>

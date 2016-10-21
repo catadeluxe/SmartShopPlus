@@ -67,5 +67,12 @@
 
     <string name="intent_gallery_picker">Selectare imagine</string>
 
+    <string name="intent_email_picker">Trimitere e-mail</string>
+    <string name="intent_email_address">catadeluxxxe@gmail.com</string>
+    <string name="intent_email_subject">SmartShopPlus</string>
+    <string name="intent_email_body">SmartShopPlus este super!</string>
+    <string name="intent_email_no_clients_installed">Nici un client e-mail nu este instalat</string>
+
+
 
 </resources>

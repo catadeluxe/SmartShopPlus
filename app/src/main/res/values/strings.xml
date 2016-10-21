@@ -63,4 +63,11 @@
 
     <string name="intent_gallery_picker">Select image</string>
 
+    <string name="intent_email_picker">Send e-mail</string>
+    <string name="intent_email_address">catadeluxxxe@gmail.com</string>
+    <string name="intent_email_subject">SmartShopPlus</string>
+    <string name="intent_email_body">SmartShopPlus is awesome!</string>
+    <string name="intent_email_no_clients_installed">There are no e-mail clients installed</string>
+
+
 </resources>

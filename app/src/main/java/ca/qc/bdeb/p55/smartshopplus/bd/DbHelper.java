@@ -40,6 +40,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String PRODUIT_QUANTITE = "qualtite";
     private static final String PRODUIT_TYPE_QUANTITE = "type_quantite";
     private static final String PRODUIT_PRIX = "prix";
+    private static final String PRODUIT_EN_RABAIS = "en_rabais";
     private static final String PRODUIT_QUALITE = "qualite";
     private static final String PRODUIT_IMAGE = "image";
 
@@ -83,7 +84,7 @@ public class DbHelper extends SQLiteOpenHelper {
         listeMagasins.add(new Magasin("Bombardier", imageMagasin));
 
         // Ajout produits par défaut
-        listeProduits.add(new Produit(1, "Coca-Cola", 2000, "ml", 1.99, 5f, imageProduit));
+        listeProduits.add(new Produit(1, "Coca-Cola", 2000, "ml", 1.99, false, 5f, imageProduit));
 
 
         // Création Strings commandes SQL à exécuter
@@ -103,6 +104,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE + " REAL," +
                         PRODUIT_TYPE_QUANTITE + " TEXT," +
                         PRODUIT_PRIX + " REAL," +
+                        PRODUIT_EN_RABAIS + " INTEGER" +
                         PRODUIT_QUALITE + " REAL," +
                         PRODUIT_IMAGE + " BLOB," +
                         "FOREIGN KEY (" + PRODUIT_ID_MAGASIN_FK +
@@ -132,6 +134,7 @@ public class DbHelper extends SQLiteOpenHelper {
             values.put(PRODUIT_QUANTITE, prod.getQuantite());
             values.put(PRODUIT_TYPE_QUANTITE, prod.getTypeQuantite());
             values.put(PRODUIT_PRIX, prod.getPrix());
+            values.put(PRODUIT_EN_RABAIS, prod.isEnRabais());
             values.put(PRODUIT_QUALITE, prod.getQualite());
             values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(prod.getImage()));
 
@@ -288,17 +291,24 @@ public class DbHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(NOM_TABLE_PRODUIT,
                 new String[]{PRODUIT_ID, PRODUIT_ID_MAGASIN_FK, PRODUIT_NOM, PRODUIT_QUANTITE,
-                        PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_QUALITE, PRODUIT_IMAGE},
-                PRODUIT_ID + "=?",
+                        PRODUIT_TYPE_QUANTITE, PRODUIT_PRIX, PRODUIT_EN_RABAIS, PRODUIT_QUALITE,
+                        PRODUIT_IMAGE}, PRODUIT_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
         Produit produit = null;
         if (cursor != null) {
             cursor.moveToFirst();
 
-            produit = new Produit(cursor.getLong(0), cursor.getLong(1),
-                    cursor.getString(2), cursor.getLong(3), cursor.getString(4), cursor.getLong(5),
-                    cursor.getFloat(6), DbBitmapUtility.getImage(cursor.getBlob(7)));
+            produit = new Produit(
+                    cursor.getLong(0),
+                    cursor.getLong(1),
+                    cursor.getString(2),
+                    cursor.getDouble(3),
+                    cursor.getString(4),
+                    cursor.getDouble(5),
+                    getBooleanFromInteger(cursor.getInt(6)),
+                    cursor.getFloat(7),
+                    DbBitmapUtility.getImage(cursor.getBlob(8)));
         }
 
 
@@ -331,6 +341,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE,
                         PRODUIT_TYPE_QUANTITE,
                         PRODUIT_PRIX,
+                        PRODUIT_EN_RABAIS,
                         PRODUIT_QUALITE,
                         PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
@@ -346,9 +357,9 @@ public class DbHelper extends SQLiteOpenHelper {
                             cursor.getDouble(3),
                             cursor.getString(4),
                             cursor.getDouble(5),
-                            cursor.getFloat(6),
-                            DbBitmapUtility.getImage(cursor.getBlob(7)));
-
+                            getBooleanFromInteger(cursor.getInt(6)),
+                            cursor.getFloat(7),
+                            DbBitmapUtility.getImage(cursor.getBlob(8)));
                     listeProduits.add(produit);
                 } while (cursor.moveToNext());
             }
@@ -379,6 +390,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE,
                         PRODUIT_TYPE_QUANTITE,
                         PRODUIT_PRIX,
+                        PRODUIT_EN_RABAIS,
                         PRODUIT_QUALITE,
                         PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
@@ -395,8 +407,9 @@ public class DbHelper extends SQLiteOpenHelper {
                             cursor.getDouble(3),
                             cursor.getString(4),
                             cursor.getDouble(5),
-                            cursor.getFloat(6),
-                            DbBitmapUtility.getImage(cursor.getBlob(7)));
+                            getBooleanFromInteger(cursor.getInt(6)),
+                            cursor.getFloat(7),
+                            DbBitmapUtility.getImage(cursor.getBlob(8)));
 
                     listeProduits.add(produit);
                 } while (cursor.moveToNext());
@@ -428,6 +441,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE,
                         PRODUIT_TYPE_QUANTITE,
                         PRODUIT_PRIX,
+                        PRODUIT_EN_RABAIS,
                         PRODUIT_QUALITE,
                         PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
@@ -444,8 +458,9 @@ public class DbHelper extends SQLiteOpenHelper {
                             cursor.getDouble(3),
                             cursor.getString(4),
                             cursor.getDouble(5),
-                            cursor.getFloat(6),
-                            DbBitmapUtility.getImage(cursor.getBlob(7)));
+                            getBooleanFromInteger(cursor.getInt(6)),
+                            cursor.getFloat(7),
+                            DbBitmapUtility.getImage(cursor.getBlob(8)));
 
                     listeProduits.add(produit);
                 } while (cursor.moveToNext());
@@ -477,6 +492,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE,
                         PRODUIT_TYPE_QUANTITE,
                         PRODUIT_PRIX,
+                        PRODUIT_EN_RABAIS,
                         PRODUIT_QUALITE,
                         PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
@@ -493,8 +509,9 @@ public class DbHelper extends SQLiteOpenHelper {
                             cursor.getDouble(3),
                             cursor.getString(4),
                             cursor.getDouble(5),
-                            cursor.getFloat(6),
-                            DbBitmapUtility.getImage(cursor.getBlob(7)));
+                            getBooleanFromInteger(cursor.getInt(6)),
+                            cursor.getFloat(7),
+                            DbBitmapUtility.getImage(cursor.getBlob(8)));
 
                     listeProduits.add(produit);
                 } while (cursor.moveToNext());
@@ -526,6 +543,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         PRODUIT_QUANTITE,
                         PRODUIT_TYPE_QUANTITE,
                         PRODUIT_PRIX,
+                        PRODUIT_EN_RABAIS,
                         PRODUIT_QUALITE,
                         PRODUIT_IMAGE},
                 PRODUIT_ID_MAGASIN_FK + "=?",
@@ -542,8 +560,9 @@ public class DbHelper extends SQLiteOpenHelper {
                             cursor.getDouble(3),
                             cursor.getString(4),
                             cursor.getDouble(5),
-                            cursor.getFloat(6),
-                            DbBitmapUtility.getImage(cursor.getBlob(7)));
+                            getBooleanFromInteger(cursor.getInt(6)),
+                            cursor.getFloat(7),
+                            DbBitmapUtility.getImage(cursor.getBlob(8)));
 
                     listeProduits.add(produit);
                 } while (cursor.moveToNext());
@@ -582,6 +601,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(PRODUIT_QUANTITE, nouveauProduit.getQuantite());
         values.put(PRODUIT_TYPE_QUANTITE, nouveauProduit.getTypeQuantite());
         values.put(PRODUIT_PRIX, nouveauProduit.getPrix());
+        values.put(PRODUIT_EN_RABAIS, nouveauProduit.isEnRabais());
         values.put(PRODUIT_QUALITE, nouveauProduit.getQualite());
         values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(nouveauProduit.getImage()));
 
@@ -609,6 +629,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(PRODUIT_QUANTITE, nouveauProduit.getQuantite());
         values.put(PRODUIT_TYPE_QUANTITE, nouveauProduit.getTypeQuantite());
         values.put(PRODUIT_PRIX, nouveauProduit.getPrix());
+        values.put(PRODUIT_EN_RABAIS, nouveauProduit.isEnRabais());
         values.put(PRODUIT_QUALITE, nouveauProduit.getQualite());
         values.put(PRODUIT_IMAGE, DbBitmapUtility.getBytes(nouveauProduit.getImage()));
 
@@ -629,6 +650,17 @@ public class DbHelper extends SQLiteOpenHelper {
         for (Produit produit : listeProduitsMagasin) {
             deleteProduit(produit);
         }
+    }
+
+    /**
+     * Prend un entier en paramètre et retourne un booléen qui correspond à la valeur de cet entier
+     * selon le modèle suivant : 0 retourne false, n'importe quoi d'autre retourne true
+     *
+     * @param integer l'entier à transformer en boolean
+     * @return le boolean transformé à partir de l'entier
+     */
+    private boolean getBooleanFromInteger(int integer) {
+        return integer != 0;
     }
 
 }

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -113,6 +114,19 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mnu_ajouter:
                 Intent intent = new Intent(this, AjouterMagasinActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.mnu_contact_developer:
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{getResources().getString(R.string.intent_email_address)});
+                i.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.intent_email_subject));
+                i.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.intent_email_body));
+                try {
+                    startActivity(Intent.createChooser(i, getResources().getString(R.string.intent_email_picker)));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(MainActivity.this, getResources().getString(
+                            R.string.intent_email_no_clients_installed), Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return true;
